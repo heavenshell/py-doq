@@ -1,6 +1,17 @@
 doq
 ---
 
+.. image:: https://github.com/heavenshell/py-doq/workflows/build/badge.svg
+    :target: https://github.com/heavenshell/py-doq/actions
+
+.. image:: https://pyup.io/repos/github/heavenshell/py-doq/python-3-shield.svg
+    :target: https://pyup.io/repos/github/heavenshell/py-doq/
+    :alt: Python 3
+
+.. image:: https://pyup.io/repos/github/heavenshell/py-doq/shield.svg
+    :target: https://pyup.io/repos/github/heavenshell/py-doq/
+    :alt: Updates
+
 Docstring generator.
 
 Installation
