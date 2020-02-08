@@ -1,0 +1,106 @@
+def foo1(arg1):
+    """foo1.
+
+    :param arg1:
+    """
+    pass
+
+
+def foo2(arg1)->List[int]:
+    """foo2.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo3(arg1) ->List[int]:
+    """foo3.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo4(arg1)-> List[int]:
+    """foo4.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo5(arg1) -> List[int]:
+    """foo5.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo6(arg1) -> List[int] :
+    """foo6.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo7(
+  arg1
+)->List[int]:
+    """foo7.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo8(
+  arg1
+) ->List[int]:
+    """foo8.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo9(
+  arg1
+)-> List[int]:
+    """foo9.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo10(
+  arg1
+) -> List[int]:
+    """foo10.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass
+
+
+def foo11(
+  arg1
+) -> List[int] :
+    """foo11.
+
+    :param arg1:
+    :rtype: List[int]
+    """
+    pass

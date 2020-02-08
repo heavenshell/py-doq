@@ -1,0 +1,27 @@
+class Foo:
+    """Foo.
+    """
+
+    class Meta:
+        """Meta.
+        """
+
+        def foo(self, arg1):
+            """foo.
+
+            Parameters
+            ----------
+            arg1 :
+                arg1
+            """
+            pass
+
+    def bar(self, arg1):
+        """bar.
+
+        Parameters
+        ----------
+        arg1 :
+            arg1
+        """
+        pass

@@ -1,0 +1,13 @@
+class Foo:
+    def foo(self, arg1):
+        pass
+
+
+def foo():
+    class Meta:
+        def bar(self, arg1):
+            pass
+
+
+def main(arg1, arg2):
+    pass

@@ -1,0 +1,179 @@
+def foo1(arg1):
+    """foo1.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+    """
+    pass
+
+
+def foo2(arg1)->List[int]:
+    """foo2.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo3(arg1) ->List[int]:
+    """foo3.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo4(arg1)-> List[int]:
+    """foo4.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo5(arg1) -> List[int]:
+    """foo5.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo6(arg1) -> List[int] :
+    """foo6.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo7(
+  arg1
+)->List[int]:
+    """foo7.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo8(
+  arg1
+) ->List[int]:
+    """foo8.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo9(
+  arg1
+)-> List[int]:
+    """foo9.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo10(
+  arg1
+) -> List[int]:
+    """foo10.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass
+
+
+def foo11(
+  arg1
+) -> List[int] :
+    """foo11.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+
+    Returns
+    -------
+    List[int]
+
+    """
+    pass

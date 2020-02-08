@@ -1,0 +1,37 @@
+class Foo:
+    def foo(self, arg1):
+        pass
+
+    def bar(self, arg1=None):
+        pass
+
+    def baz(self, arg1: str):
+        pass
+
+    def spam(self, arg1: str = 'ham'):
+        pass
+
+    def ham(self, arg1: str = 'spam') -> str:
+        pass
+
+
+class Bar:
+    @staticmethod
+    def foo():
+        pass
+
+    @classmethod
+    def bar(cls, arg1):
+        pass
+
+    def baz(self, arg1=None):
+        pass
+
+    def spam(self, arg1: str):
+        pass
+
+    def ham(self, arg1: str = 'ham'):
+        pass
+
+    def bacon(self, arg1: str = 'spam') -> str:
+        pass

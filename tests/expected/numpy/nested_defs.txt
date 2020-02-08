@@ -1,0 +1,74 @@
+def foo(arg1):
+    """foo.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+    """
+    def bar(arg2):
+        """bar.
+
+        Parameters
+        ----------
+        arg2 :
+            arg2
+        """
+        pass
+
+
+def bar(arg1=None):
+    """bar.
+
+    Parameters
+    ----------
+    arg1 :
+        arg1
+    """
+    def baz(arg2=None):
+        """baz.
+
+        Parameters
+        ----------
+        arg2 :
+            arg2
+        """
+        pass
+
+
+def baz(arg1: str):
+    """baz.
+
+    Parameters
+    ----------
+    arg1 : str
+        arg1
+    """
+    def spam(arg2: str):
+        """spam.
+
+        Parameters
+        ----------
+        arg2 : str
+            arg2
+        """
+        pass
+
+
+def spam(arg1: str = 'ham'):
+    """spam.
+
+    Parameters
+    ----------
+    arg1 : str
+        arg1
+    """
+    def foo(arg2: str = 'ham'):
+        """foo.
+
+        Parameters
+        ----------
+        arg2 : str
+            arg2
+        """
+        pass

@@ -1,0 +1,18 @@
+def foo(arg1):
+    def bar(arg2):
+        pass
+
+
+def bar(arg1=None):
+    def baz(arg2=None):
+        pass
+
+
+def baz(arg1: str):
+    def spam(arg2: str):
+        pass
+
+
+def spam(arg1: str = 'ham'):
+    def foo(arg2: str = 'ham'):
+        pass

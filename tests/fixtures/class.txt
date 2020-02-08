@@ -1,0 +1,18 @@
+from typing import List
+
+
+class Foo:
+    def foo(self, arg1):
+        pass
+
+    def bar(self, arg1=None):
+        pass
+
+    def baz(self, arg1: str):
+        pass
+
+    def spam(self, arg1: str = 'ham'):
+        pass
+
+    def ham(self, arg1: str = 'ham') -> List[int]:
+        pass

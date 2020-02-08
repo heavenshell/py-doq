@@ -1,0 +1,35 @@
+def get_adjacency(
+    facets,
+    points=None,
+    max_degree=None,
+    dtypes={'ints': np.int64, 'floats': np.float32},
+):
+    """get_adjacency.
+
+    Args:
+        facets
+        points
+        max_degree
+        dtypes
+    """
+    pass
+
+
+def get_adjacency2(
+    facets,
+    points=None,
+    max_degree=None,
+    dtypes={'ints': np.int64, 'floats': np.float32},
+) -> List[int]:
+    """get_adjacency2.
+
+    Args:
+        facets
+        points
+        max_degree
+        dtypes
+
+    Returns:
+        List[int]:
+    """
+    pass

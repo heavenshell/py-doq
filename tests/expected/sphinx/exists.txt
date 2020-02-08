@@ -1,0 +1,11 @@
+def foo(arg1):
+    """Docstring is already exists."""
+    pass
+
+
+class Foo:
+    """Class docstring is already exists."""
+
+    def foo(self):
+        """Method docstring is already exists."""
+        pass

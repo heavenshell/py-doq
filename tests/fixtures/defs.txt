@@ -1,0 +1,22 @@
+def foo():
+    pass
+
+
+def bar(arg1):
+    pass
+
+
+def baz(arg1=None):
+    pass
+
+
+def spam(arg1: str):
+    pass
+
+
+def ham(arg1: str = 'ham'):
+    pass
+
+
+def bacon(arg1: str = 'spam', arg2: str = 'ham') -> int:
+    pass

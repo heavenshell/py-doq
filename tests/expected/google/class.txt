@@ -1,0 +1,49 @@
+from typing import List
+
+
+class Foo:
+    """Foo.
+    """
+
+    def foo(self, arg1):
+        """foo.
+
+        Args:
+            arg1
+        """
+        pass
+
+    def bar(self, arg1=None):
+        """bar.
+
+        Args:
+            arg1
+        """
+        pass
+
+    def baz(self, arg1: str):
+        """baz.
+
+        Args:
+            arg1 (str): arg1
+        """
+        pass
+
+    def spam(self, arg1: str = 'ham'):
+        """spam.
+
+        Args:
+            arg1 (str): arg1
+        """
+        pass
+
+    def ham(self, arg1: str = 'ham') -> List[int]:
+        """ham.
+
+        Args:
+            arg1 (str): arg1
+
+        Returns:
+            List[int]:
+        """
+        pass

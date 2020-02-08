@@ -1,0 +1,90 @@
+class Foo:
+    """Foo."""
+
+    def foo(self, arg1):
+        """foo.
+
+        :param arg1:
+        """
+        pass
+
+    def bar(self, arg1=None):
+        """bar.
+
+        :param arg1:
+        """
+        pass
+
+    def baz(self, arg1: str):
+        """baz.
+
+        :param arg1:
+        :type arg1: str
+        """
+        pass
+
+    def spam(self, arg1: str = 'ham'):
+        """spam.
+
+        :param arg1:
+        :type arg1: str
+        """
+        pass
+
+    def ham(self, arg1: str = 'spam') -> str:
+        """ham.
+
+        :param arg1:
+        :type arg1: str
+        :rtype: str
+        """
+        pass
+
+
+class Bar:
+    """Bar."""
+
+    @staticmethod
+    def foo():
+        """foo."""
+        pass
+
+    @classmethod
+    def bar(cls, arg1):
+        """bar.
+
+        :param arg1:
+        """
+        pass
+
+    def baz(self, arg1=None):
+        """baz.
+
+        :param arg1:
+        """
+        pass
+
+    def spam(self, arg1: str):
+        """spam.
+
+        :param arg1:
+        :type arg1: str
+        """
+        pass
+
+    def ham(self, arg1: str = 'ham'):
+        """ham.
+
+        :param arg1:
+        :type arg1: str
+        """
+        pass
+
+    def bacon(self, arg1: str = 'spam') -> str:
+        """bacon.
+
+        :param arg1:
+        :type arg1: str
+        :rtype: str
+        """
+        pass

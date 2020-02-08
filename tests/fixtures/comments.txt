@@ -1,0 +1,9 @@
+def parse_defs(module, ignores=None):   # noqa C901
+    if ignores is None:
+        ignores = []
+
+    results = []
+    for d in module.iter_funcdefs():
+        if d.get_doc_node():
+            # Docstring already exists.
+            continue

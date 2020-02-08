@@ -1,0 +1,16 @@
+graft doq
+
+include LICENSE
+include README.rst
+include setup.cfg
+include setup.py
+
+exclude requirements.txt
+
+global-exclude __pycache__
+global-exclude *.py[co]
+
+prune tests
+prune tests/fixtures
+prune tests/expected
+prune examples

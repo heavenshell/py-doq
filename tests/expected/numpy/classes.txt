@@ -1,0 +1,125 @@
+class Foo:
+    """Foo.
+    """
+
+    def foo(self, arg1):
+        """foo.
+
+        Parameters
+        ----------
+        arg1 :
+            arg1
+        """
+        pass
+
+    def bar(self, arg1=None):
+        """bar.
+
+        Parameters
+        ----------
+        arg1 :
+            arg1
+        """
+        pass
+
+    def baz(self, arg1: str):
+        """baz.
+
+        Parameters
+        ----------
+        arg1 : str
+            arg1
+        """
+        pass
+
+    def spam(self, arg1: str = 'ham'):
+        """spam.
+
+        Parameters
+        ----------
+        arg1 : str
+            arg1
+        """
+        pass
+
+    def ham(self, arg1: str = 'spam') -> str:
+        """ham.
+
+        Parameters
+        ----------
+        arg1 : str
+            arg1
+
+        Returns
+        -------
+        str
+
+        """
+        pass
+
+
+class Bar:
+    """Bar.
+    """
+
+    @staticmethod
+    def foo():
+        """foo.
+        """
+        pass
+
+    @classmethod
+    def bar(cls, arg1):
+        """bar.
+
+        Parameters
+        ----------
+        arg1 :
+            arg1
+        """
+        pass
+
+    def baz(self, arg1=None):
+        """baz.
+
+        Parameters
+        ----------
+        arg1 :
+            arg1
+        """
+        pass
+
+    def spam(self, arg1: str):
+        """spam.
+
+        Parameters
+        ----------
+        arg1 : str
+            arg1
+        """
+        pass
+
+    def ham(self, arg1: str = 'ham'):
+        """ham.
+
+        Parameters
+        ----------
+        arg1 : str
+            arg1
+        """
+        pass
+
+    def bacon(self, arg1: str = 'spam') -> str:
+        """bacon.
+
+        Parameters
+        ----------
+        arg1 : str
+            arg1
+
+        Returns
+        -------
+        str
+
+        """
+        pass
