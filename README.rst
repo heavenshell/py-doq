@@ -105,7 +105,7 @@ Available Jinja2's variable
 |             | annotation | Argument's type hint    |
 |             +------------+-------------------------+
 |             | default    | Defaut keyword argument |
-+-------------+--------------------------------------+
++-------------+------------+-------------------------+
 | return_type | Return type hint                     |
 +-------------+--------------------------------------+
 
