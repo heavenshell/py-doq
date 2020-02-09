@@ -4,6 +4,7 @@ include LICENSE
 include README.rst
 include setup.cfg
 include setup.py
+recursive-include doq/templates *.txt
 
 exclude requirements.txt
 
