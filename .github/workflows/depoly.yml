@@ -1,6 +1,6 @@
 name: deploy
 
-on: 
+on:
   release:
     types: [created]
 
