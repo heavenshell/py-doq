@@ -9,7 +9,7 @@ version = ''
 with open('doq/__init__.py') as f:
     for line in f.readlines():
         if line.startswith('__version__'):
-            version = line.split('=')[1].strip()
+            version = line.split('=')[1].strip().replace("'", '')
 
 rst_path = os.path.join(os.path.dirname(__file__), 'README.rst')
 description = ''
