@@ -42,9 +42,7 @@ def parse_defs(module, ignores=None):   # noqa C901
 
     results = []
     for d in module.iter_funcdefs():
-        if d.get_doc_node():
-            # Docstring already exists.
-            continue
+        is_doc_exists = True if d.get_doc_node() else False
 
         (start_lineno, start_col) = d.start_pos
         (end_lineno, end_col) = d.end_pos
@@ -90,6 +88,7 @@ def parse_defs(module, ignores=None):   # noqa C901
             'start_col': start_col,
             'end_lineno': end_lineno,
             'end_col': end_col,
+            'is_doc_exists': is_doc_exists,
         })
 
         nested = parse_defs(d)
@@ -107,9 +106,7 @@ def parse_classdefs(module):
     results = []
 
     for c in module.iter_classdefs():
-        if c.get_doc_node():
-            # Docstring already exists.
-            continue
+        is_doc_exists = True if c.get_doc_node() else False
 
         (start_lineno, start_col) = c.start_pos
         (end_lineno, end_col) = c.end_pos
@@ -123,6 +120,7 @@ def parse_classdefs(module):
             'start_col': start_col,
             'end_lineno': end_lineno,
             'end_col': end_col,
+            'is_doc_exists': is_doc_exists,
         })
 
         nested = parse_classdefs(c)

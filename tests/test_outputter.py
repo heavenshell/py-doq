@@ -19,6 +19,7 @@ class StringOutptterTestCase(TestCase):
             'start_col': 0,
             'end_lineno': 2,
             'end_col': 0,
+            'is_doc_exists': False,
         }]
         output = StringOutptter().format(lines=lines, docstrings=docstrings, indent=4)
         expected = '\n'.join([
@@ -49,6 +50,7 @@ class StringOutptterTestCase(TestCase):
             'start_col': 0,
             'end_lineno': 8,
             'end_col': 0,
+            'is_doc_exists': False,
         }]
         output = StringOutptter().format(lines=lines, docstrings=docstrings, indent=4)
         expected = '\n'.join([
@@ -85,6 +87,7 @@ class StringOutptterTestCase(TestCase):
             'start_col': 0,
             'end_lineno': 7,
             'end_col': 0,
+            'is_doc_exists': False,
         }]
         output = StringOutptter().format(lines=lines, docstrings=docstrings, indent=4)
         expected = '\n'.join([
@@ -117,6 +120,7 @@ class JSONOutptterTestCase(TestCase):
             'start_col': 0,
             'end_lineno': 2,
             'end_col': 0,
+            'is_doc_exists': False,
         }]
         output = JSONOutputter().format(lines=lines, docstrings=docstrings, indent=4)
         self.assertEqual(json.dumps(docstrings), output)
