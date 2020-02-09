@@ -62,37 +62,40 @@ def run(lines, path):
     for signature in signatures:
         if 'defs' in signature:
             # Class docstring
-            docstring = template.load(params=signature, filename='class.txt')
-            docstrings.append({
-                'docstring': docstring,
-                'start_lineno': signature['start_lineno'],
-                'start_col': signature['start_col'],
-                'end_lineno': signature['end_lineno'],
-                'end_col': signature['end_col'],
-            })
+            if signature['is_doc_exists'] is False:
+                docstring = template.load(params=signature, filename='class.txt')
+                docstrings.append({
+                    'docstring': docstring,
+                    'start_lineno': signature['start_lineno'],
+                    'start_col': signature['start_col'],
+                    'end_lineno': signature['end_lineno'],
+                    'end_col': signature['end_col'],
+                })
 
             # Method docstring
             for d in signature['defs']:
-                filename = 'def.txt' if len(d['params']) else 'noarg.txt'
-                docstring = template.load(params=d, filename=filename)
+                if d['is_doc_exists'] is False:
+                    filename = 'def.txt' if len(d['params']) else 'noarg.txt'
+                    docstring = template.load(params=d, filename=filename)
+                    docstrings.append({
+                        'docstring': docstring,
+                        'start_lineno': d['start_lineno'],
+                        'start_col': d['start_col'],
+                        'end_lineno': d['end_lineno'],
+                        'end_col': d['start_col'],
+                    })
+        else:
+            if signature['is_doc_exists'] is False:
+                filename = 'def.txt' if len(signature['params']) else 'noarg.txt'
+                # Function docstring
+                docstring = template.load(params=signature, filename=filename)
                 docstrings.append({
                     'docstring': docstring,
-                    'start_lineno': d['start_lineno'],
-                    'start_col': d['start_col'],
-                    'end_lineno': d['end_lineno'],
-                    'end_col': d['start_col'],
+                    'start_lineno': signature['start_lineno'],
+                    'start_col': signature['start_col'],
+                    'end_lineno': signature['end_lineno'],
+                    'end_col': signature['start_col'],
                 })
-        else:
-            filename = 'def.txt' if len(signature['params']) else 'noarg.txt'
-            # Function docstring
-            docstring = template.load(params=signature, filename=filename)
-            docstrings.append({
-                'docstring': docstring,
-                'start_lineno': signature['start_lineno'],
-                'start_col': signature['start_col'],
-                'end_lineno': signature['end_lineno'],
-                'end_col': signature['start_col'],
-            })
 
     docstrings.sort(key=_sort)
 
@@ -142,6 +145,9 @@ def main(args):
 
     for target in targets:
         docstrings = run(target['lines'], path)
+        if len(docstrings) == 0:
+            continue
+
         if args.style == 'json':
             outputter = JSONOutputter()
         else:
@@ -153,7 +159,7 @@ def main(args):
             indent=args.indent,
         )
 
-        if args.write and len(docstrings) and target['path'] != '<stdin>':
+        if args.write and target['path'] != '<stdin>':
             with open(target['path'], 'w') as f:
                 f.write(output)
 

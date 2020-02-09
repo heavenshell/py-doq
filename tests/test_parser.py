@@ -23,6 +23,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -44,6 +45,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -65,6 +67,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -85,6 +88,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -105,6 +109,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -125,6 +130,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -145,6 +151,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -172,6 +179,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -199,6 +207,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': len(line),
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -225,6 +234,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 30,
+                    'is_doc_exists': False,
                 },
             },
             {
@@ -248,6 +258,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 36,
+                    'is_doc_exists': False,
                 },
             },
         ]
@@ -277,6 +288,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 30,
+                    'is_doc_exists': False,
                 },
             },
             {
@@ -299,6 +311,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 52,
+                    'is_doc_exists': False,
                 },
             },
         ]
@@ -328,6 +341,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 41,
+                    'is_doc_exists': False,
                 },
             },
             {
@@ -350,6 +364,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 46,
+                    'is_doc_exists': False,
                 },
             },
         ]
@@ -379,6 +394,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 50,
+                    'is_doc_exists': False,
                 },
             },
             {
@@ -401,6 +417,7 @@ class ParseTestCase(TestCase):
                     'start_col': 0,
                     'end_lineno': 1,
                     'end_col': 46,
+                    'is_doc_exists': False,
                 },
             },
         ]
@@ -426,6 +443,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 1,
                 'end_col': 32,
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -456,6 +474,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 3,
                 'end_col': 0,
+                'is_doc_exists': False,
             },
             actual[0],
         )
@@ -480,6 +499,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 6,
                 'end_col': 8,
+                'is_doc_exists': False,
             },
             actual[1],
         )
@@ -512,6 +532,7 @@ class ParseTestCase(TestCase):
                         'start_col': 3,
                         'end_lineno': 4,
                         'end_col': 0,
+                        'is_doc_exists': False,
                     },
                     {
                         'name': 'foo',
@@ -532,12 +553,14 @@ class ParseTestCase(TestCase):
                         'start_col': 3,
                         'end_lineno': 5,
                         'end_col': 11,
+                        'is_doc_exists': False,
                     },
                 ],
                 'start_lineno': 1,
                 'start_col': 0,
                 'end_lineno': 5,
                 'end_col': 11,
+                'is_doc_exists': False,
             },
             actual,
         )
@@ -577,6 +600,7 @@ class ParseTestCase(TestCase):
                         'start_col': 3,
                         'end_lineno': 4,
                         'end_col': 0,
+                        'is_doc_exists': False,
                     },
                     {
                         'name': 'foo',
@@ -597,6 +621,7 @@ class ParseTestCase(TestCase):
                         'start_col': 3,
                         'end_lineno': 6,
                         'end_col': 0,
+                        'is_doc_exists': False,
                     },
 
 
@@ -605,6 +630,7 @@ class ParseTestCase(TestCase):
                 'start_col': 0,
                 'end_lineno': 6,
                 'end_col': 0,
+                'is_doc_exists': False,
             },
             actual[0],
         )
@@ -632,6 +658,7 @@ class ParseTestCase(TestCase):
                         'start_col': 3,
                         'end_lineno': 11,
                         'end_col': 0,
+                        'is_doc_exists': False,
                     },
                     {
                         'name': 'bar',
@@ -647,14 +674,45 @@ class ParseTestCase(TestCase):
                         'start_col': 3,
                         'end_lineno': 12,
                         'end_col': 11,
+                        'is_doc_exists': False,
                     },
                 ],
                 'start_lineno': 8,
                 'start_col': 0,
                 'end_lineno': 12,
                 'end_col': 11,
+                'is_doc_exists': False,
             },
             actual[1],
+        )
+
+    def test_doc_exists(self):
+        line = '\n'.join([
+            'def foo(arg1):',
+            '   """foo.'
+            '',
+            '   :param arg1',
+            '   """',
+            '   pass',
+        ])
+
+        actual = parse(line)[0]
+        self.assertDictEqual(
+            {
+                'name': 'foo',
+                'params': [{
+                    'argument': 'arg1',
+                    'annotation': None,
+                    'default': None,
+                }],
+                'return_type': None,
+                'start_lineno': 1,
+                'start_col': 0,
+                'end_lineno': 5,
+                'end_col': 7,
+                'is_doc_exists': True,
+            },
+            actual,
         )
 
 

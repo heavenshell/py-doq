@@ -23,12 +23,14 @@ class CliTestCase(TestCase):
             'class.txt',
             'classes.txt',
             'defs.txt',
-            'exists.txt',
             'issues.txt',
             'mix.txt',
             'nested_classes.txt',
             'nested_defs.txt',
             'return_type.txt',
+        ]
+        cls.ignore_files = [
+            'exists.txt',
         ]
         cls.basepath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         cls.fixtures_path = os.path.join(cls.basepath, 'tests', 'fixtures')
@@ -56,6 +58,25 @@ class CliTestCase(TestCase):
 
             self.assertSequenceEqual(expected, actual)
 
+    def test_no_output_with_sphinx_style(self):
+        for file in self.ignore_files:
+            with open(os.path.join(self.fixtures_path, file)) as f:
+                args = argparse.Namespace(
+                    file=f,
+                    start=1,
+                    end=0,
+                    template_path=None,
+                    formatter='sphinx',
+                    style='string',
+                    indent=4,
+                    recursive=False,
+                    write=False,
+                )
+                with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
+                    main(args)
+            actual = p.getvalue().split('\n')
+            self.assertSequenceEqual([''], actual)
+
     def test_output_with_google_style(self):
         expected_path = os.path.join(self.basepath, 'tests', 'expected', 'google')
 
@@ -80,6 +101,25 @@ class CliTestCase(TestCase):
 
             self.assertSequenceEqual(expected, actual)
 
+    def test_no_output_with_google_style(self):
+        for file in self.ignore_files:
+            with open(os.path.join(self.fixtures_path, file)) as f:
+                args = argparse.Namespace(
+                    file=f,
+                    start=1,
+                    end=0,
+                    template_path=None,
+                    formatter='google',
+                    style='string',
+                    indent=4,
+                    recursive=False,
+                    write=False,
+                )
+                with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
+                    main(args)
+            actual = p.getvalue().split('\n')
+            self.assertSequenceEqual([''], actual)
+
     def test_output_with_numpy_style(self):
         expected_path = os.path.join(self.basepath, 'tests', 'expected', 'numpy')
 
@@ -103,6 +143,25 @@ class CliTestCase(TestCase):
                 expected = f.read().rstrip().split('\n')
 
             self.assertSequenceEqual(expected, actual)
+
+    def test_no_output_with_numpy_style(self):
+        for file in self.ignore_files:
+            with open(os.path.join(self.fixtures_path, file)) as f:
+                args = argparse.Namespace(
+                    file=f,
+                    start=1,
+                    end=0,
+                    template_path=None,
+                    formatter='numpy',
+                    style='string',
+                    indent=4,
+                    recursive=False,
+                    write=False,
+                )
+                with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
+                    main(args)
+            actual = p.getvalue().split('\n')
+            self.assertSequenceEqual([''], actual)
 
     def test_find_files(self):
         files = find_files('.')
@@ -278,3 +337,36 @@ class CliTestCase(TestCase):
             self.assertEqual(expected[k]['end_col'], v['end_col'])
             self.assertEqual(expected[k]['start_lineno'], v['start_lineno'])
             self.assertEqual(expected[k]['end_lineno'], v['end_lineno'])
+
+    def test_is_doc_exists(self):
+        docstrings = [
+            'def foo(arg1):',
+            '   """foo.',
+            '',
+            '   :param arg1',
+            '   pass',
+        ]
+        template_path = os.path.join(
+            self.basepath,
+            'doq',
+            'templates',
+            'sphinx',
+        )
+
+        expected_docstrings = [
+            [
+                '"""foo.',
+                '',
+                ':param arg1:',
+                '"""',
+            ],
+        ]
+        results = run(docstrings, template_path)
+        self.assertEqual(
+            '\n'.join(expected_docstrings[0]),
+            results[0]['docstring'],
+        )
+        self.assertEqual(0, results[0]['start_col'])
+        self.assertEqual(0, results[0]['end_col'])
+        self.assertEqual(1, results[0]['start_lineno'])
+        self.assertEqual(5, results[0]['end_lineno'])
