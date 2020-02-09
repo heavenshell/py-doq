@@ -4,11 +4,11 @@ import os
 import re
 import sys
 
+from doq import __version__
 from doq.outputter import (
     JSONOutputter,
     StringOutptter,
 )
-from doq import __version__
 from doq.parser import parse
 from doq.template import Template
 
