@@ -5,8 +5,11 @@ from setuptools import (
     setup,
 )
 
-from doq import __version__
-
+version = ''
+with open('doq/__init__.py') as f:
+    for line in f.readlines():
+        if line.startswith('__version__'):
+            version = line.split('=')[1].strip()
 
 rst_path = os.path.join(os.path.dirname(__file__), 'README.rst')
 description = ''
@@ -15,7 +18,7 @@ with open(rst_path) as f:
 
 setup(
     name='doq',
-    version=__version__,
+    version=version,
     author='Shinya Ohyanagi',
     author_email='sohyanagi@gmail.com',
     url='http://github.com/heavenshell/py-doq',
