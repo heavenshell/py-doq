@@ -28,6 +28,12 @@ setup(
     platforms='any',
     packages=find_packages(exclude=['tests']),
     package_dir={'': '.'},
+    include_package_data=True,
+    package_data={'doq': [
+        'templates/google/*.txt',
+        'templates/numpy/*.txt',
+        'templates/sphinx/*.txt',
+    ]},
     install_requires=['parso', 'jinja2'],
     classifiers=[
         'Development Status :: 4 - Beta',

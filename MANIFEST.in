@@ -4,7 +4,9 @@ include LICENSE
 include README.rst
 include setup.cfg
 include setup.py
-recursive-include doq/templates *.txt
+include doq/templates/google/*.txt
+include doq/templates/numpy/*.txt
+include doq/templates/sphinx/*.txt
 
 exclude requirements.txt
 
