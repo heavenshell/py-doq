@@ -8,10 +8,10 @@ from parameterized import parameterized
 
 from doq.cli import (
     find_files,
+    generate_docstrings,
     get_lines,
     get_targets,
     get_template_path,
-    main,
     run,
 )
 
@@ -51,7 +51,7 @@ class CliTestCase(TestCase):
                     write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
-                    main(args)
+                    run(args)
             actual = p.getvalue().split('\n')
             with open(os.path.join(expected_path, file)) as f:
                 expected = f.read().rstrip().split('\n')
@@ -73,7 +73,7 @@ class CliTestCase(TestCase):
                     write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
-                    main(args)
+                    run(args)
             actual = p.getvalue().split('\n')
             self.assertSequenceEqual([''], actual)
 
@@ -94,7 +94,7 @@ class CliTestCase(TestCase):
                     write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
-                    main(args)
+                    run(args)
             actual = p.getvalue().split('\n')
             with open(os.path.join(expected_path, file)) as f:
                 expected = f.read().rstrip().split('\n')
@@ -116,7 +116,7 @@ class CliTestCase(TestCase):
                     write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
-                    main(args)
+                    run(args)
             actual = p.getvalue().split('\n')
             self.assertSequenceEqual([''], actual)
 
@@ -137,7 +137,7 @@ class CliTestCase(TestCase):
                     write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
-                    main(args)
+                    run(args)
             actual = p.getvalue().split('\n')
             with open(os.path.join(expected_path, file)) as f:
                 expected = f.read().rstrip().split('\n')
@@ -159,7 +159,7 @@ class CliTestCase(TestCase):
                     write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
-                    main(args)
+                    run(args)
             actual = p.getvalue().split('\n')
             self.assertSequenceEqual([''], actual)
 
@@ -251,7 +251,7 @@ class CliTestCase(TestCase):
                 '"""',
             ],
         ]
-        results = run(docstrings, template_path)
+        results = generate_docstrings(docstrings, template_path)
         self.assertEqual(
             '\n'.join(expected_docstrings[0]),
             results[0]['docstring'],
@@ -327,7 +327,7 @@ class CliTestCase(TestCase):
                 'end_lineno': 8,
             },
         ]
-        results = run(docstrings, template_path)
+        results = generate_docstrings(docstrings, template_path)
         for k, v in enumerate(results):
             self.assertEqual(
                 '\n'.join(expected[k]['docstring']),
@@ -361,7 +361,7 @@ class CliTestCase(TestCase):
                 '"""',
             ],
         ]
-        results = run(docstrings, template_path)
+        results = generate_docstrings(docstrings, template_path)
         self.assertEqual(
             '\n'.join(expected_docstrings[0]),
             results[0]['docstring'],
