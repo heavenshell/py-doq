@@ -54,7 +54,7 @@ def get_template_path(template_path, formatter):
     return os.path.abspath(template_path)
 
 
-def run(lines, path):
+def generate_docstrings(lines, path):
     template = Template(paths=[path])
     signatures = parse('\n'.join(lines))
 
@@ -133,7 +133,7 @@ def get_targets(args):
     return targets
 
 
-def main(args):
+def run(args):
     targets = get_targets(args)
     path = get_template_path(
         template_path=args.template_path,
@@ -144,7 +144,7 @@ def main(args):
         return False
 
     for target in targets:
-        docstrings = run(target['lines'], path)
+        docstrings = generate_docstrings(target['lines'], path)
         if len(docstrings) == 0:
             continue
 
@@ -251,13 +251,17 @@ def parse_options():
     return args
 
 
-if __name__ == '__main__':
+def main():
     args = parse_options()
     try:
-        ret = main(args)
+        ret = run(args)
         if ret:
             sys.exit(0)
 
         sys.exit(1)
     except KeyboardInterrupt:
         pass
+
+
+if __name__ == '__main__':
+    main()
