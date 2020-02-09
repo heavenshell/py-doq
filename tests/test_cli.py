@@ -46,6 +46,7 @@ class CliTestCase(TestCase):
                     style='string',
                     indent=4,
                     recursive=False,
+                    write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     main(args)
@@ -69,6 +70,7 @@ class CliTestCase(TestCase):
                     style='string',
                     indent=4,
                     recursive=False,
+                    write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     main(args)
@@ -92,6 +94,7 @@ class CliTestCase(TestCase):
                     style='string',
                     indent=4,
                     recursive=False,
+                    write=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     main(args)
@@ -153,6 +156,7 @@ class CliTestCase(TestCase):
                 style='string',
                 indent=4,
                 recursive=False,
+                write=False,
             )
             targets = get_targets(args)
             self.assertEqual(1, len(targets))

@@ -8,6 +8,7 @@ from doq.outputter import (
     JSONOutputter,
     StringOutptter,
 )
+from doq import __version__
 from doq.parser import parse
 from doq.template import Template
 
@@ -152,15 +153,24 @@ def main(args):
             indent=args.indent,
         )
 
-        sys.stdout.write(output)
+        if args.write and len(docstrings) and target['path'] != '<stdin>':
+            with open(target['path'], 'w') as f:
+                f.write(output)
+
+        else:
+            sys.stdout.write(output)
 
     return True
 
 
 def parse_options():
-    description = 'Docstring generator.'
-    parser = argparse.ArgumentParser(description=description, add_help=True)
+    parser = argparse.ArgumentParser(
+        prog='doq',
+        description='Docstring generator.',
+        add_help=True,
+    )
     parser.add_argument(
+        '-f',
         '--file',
         type=argparse.FileType('r'),
         default='-',
@@ -179,12 +189,14 @@ def parse_options():
         help='End lineno',
     )
     parser.add_argument(
+        '-t',
         '--template_path',
         type=str,
         default=None,
         help='Path to template directory',
     )
     parser.add_argument(
+        '-s',
         '--style',
         type=str,
         default='string',
@@ -194,7 +206,7 @@ def parse_options():
         '--formatter',
         type=str,
         default='sphinx',
-        help='Docstring formatter. sphinx,google,numpy',
+        help='Docstring formatter. sphinx,google or numpy',
     )
     parser.add_argument(
         '--indent',
@@ -203,14 +215,29 @@ def parse_options():
         help='Indent number',
     )
     parser.add_argument(
+        '-r',
         '--recursive',
         action='store_true',
         help='Run recursively over directories',
     )
     parser.add_argument(
+        '-d',
         '--directory',
         default='',
         help='Dire',
+    )
+    parser.add_argument(
+        '-w',
+        '--write',
+        action='store_true',
+        help='Edit files in-place',
+    )
+    parser.add_argument(
+        '-v',
+        '--version',
+        action='version',
+        version='%(prog)s {0}'.format(__version__),
+        help='Output the version number',
     )
 
     args = parser.parse_args()
