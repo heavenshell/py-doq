@@ -48,4 +48,22 @@ class StringOutptter(BaseOutputter):
 
 class JSONOutputter(BaseOutputter):
     def format(self, lines, docstrings, indent=None):
-        return json.dumps(docstrings)
+        results = []
+        for d in docstrings:
+            col = d['start_col'] + indent
+            ret = []
+            for line in d['docstring'].split('\n'):
+                if line == '':
+                    ret.append('')
+                else:
+                    ret.append('{0}{1}'.format(' ' * col, line))
+
+            results.append({
+                'docstring': '\n'.join(ret),
+                'start_col': col,
+                'start_lineno': d['start_lineno'],
+                'end_col': d['end_col'],
+                'end_lineno': d['end_lineno'],
+            })
+
+        return json.dumps(results)

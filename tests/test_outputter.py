@@ -122,5 +122,23 @@ class JSONOutptterTestCase(TestCase):
             'end_col': 0,
             'is_doc_exists': False,
         }]
-        output = JSONOutputter().format(lines=lines, docstrings=docstrings, indent=4)
-        self.assertEqual(json.dumps(docstrings), output)
+        output = JSONOutputter().format(
+            lines=lines,
+            docstrings=docstrings,
+            indent=4,
+        )
+
+        expected = [{
+            'docstring': '\n'.join([
+                '    """foo.',
+                '',
+                '    :param arg1:',
+                '    :param arg2:',
+                '    """',
+            ]),
+            'start_col': 4,
+            'start_lineno': 1,
+            'end_col': 0,
+            'end_lineno': 2,
+        }]
+        self.assertEqual(json.dumps(expected), output)
