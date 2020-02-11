@@ -1,0 +1,8 @@
+class Foo:
+    def foo(self):
+        class Bar:
+            def bar(self):
+                pass
+
+            def baz(self, arg1):
+                pass

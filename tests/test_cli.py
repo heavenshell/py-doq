@@ -25,6 +25,7 @@ class CliTestCase(TestCase):
             'defs.txt',
             'issues.txt',
             'mix.txt',
+            'nested.txt',
             'nested_classes.txt',
             'nested_defs.txt',
             'return_type.txt',

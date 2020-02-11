@@ -54,6 +54,32 @@ def get_template_path(template_path, formatter):
     return os.path.abspath(template_path)
 
 
+def generate_def_docstrings(signature, template):
+    docstrings = []
+    for d in signature['defs']:
+        if d['is_doc_exists'] is False:
+            filename = 'noarg.txt'
+            if 'params' in d and len(d['params']):
+                filename = 'def.txt'
+            elif 'defs' in d:
+                filename = 'class.txt'
+
+            docstring = template.load(params=d, filename=filename)
+            docstrings.append({
+                'docstring': docstring,
+                'start_lineno': d['start_lineno'],
+                'start_col': d['start_col'],
+                'end_lineno': d['end_lineno'],
+                'end_col': d['start_col'],
+            })
+            if 'defs' in d:
+                results = generate_def_docstrings(d, template)
+                if len(results):
+                    docstrings += results
+
+    return docstrings
+
+
 def generate_docstrings(lines, path):
     template = Template(paths=[path])
     signatures = parse('\n'.join(lines))
@@ -73,20 +99,11 @@ def generate_docstrings(lines, path):
                 })
 
             # Method docstring
-            for d in signature['defs']:
-                if d['is_doc_exists'] is False:
-                    filename = 'def.txt' if len(d['params']) else 'noarg.txt'
-                    docstring = template.load(params=d, filename=filename)
-                    docstrings.append({
-                        'docstring': docstring,
-                        'start_lineno': d['start_lineno'],
-                        'start_col': d['start_col'],
-                        'end_lineno': d['end_lineno'],
-                        'end_col': d['start_col'],
-                    })
+            docstrings += generate_def_docstrings(signature, template)
         else:
             if signature['is_doc_exists'] is False:
-                filename = 'def.txt' if len(signature['params']) else 'noarg.txt'
+                filename = 'def.txt' \
+                    if len(signature['params']) else 'noarg.txt'
                 # Function docstring
                 docstring = template.load(params=signature, filename=filename)
                 docstrings.append({
