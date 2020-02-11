@@ -8,6 +8,8 @@ class Template:
     def __init__(self, paths):
         self.env = Environment(
             loader=FileSystemLoader(paths),
+            autoescape=False,
+            auto_reload=False,
         )
 
     def load(self, params, filename=None):
