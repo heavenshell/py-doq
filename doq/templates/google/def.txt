@@ -2,7 +2,7 @@
 
 Args:
 {%- for p in params %}
-    {{ p.argument }}{% if p.annotation %} ({{ p.annotation }}): {{ p.argument }}{% endif -%}
+    {{ p.argument }}{% if p.annotation %} ({{ p.annotation }}): {{ p.argument }}{% else %}:{% endif -%}
 {% endfor %}
 {% if return_type %}
 Returns:

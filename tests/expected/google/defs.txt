@@ -8,7 +8,7 @@ def bar(arg1):
     """bar.
 
     Args:
-        arg1
+        arg1:
     """
     pass
 
@@ -17,7 +17,7 @@ def baz(arg1=None):
     """baz.
 
     Args:
-        arg1
+        arg1:
     """
     pass
 

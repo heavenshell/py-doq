@@ -6,7 +6,7 @@ class Foo:
         """foo.
 
         Args:
-            arg1
+            arg1:
         """
         pass
 
@@ -22,7 +22,7 @@ def foo():
             """bar.
 
             Args:
-                arg1
+                arg1:
             """
             pass
 
@@ -31,7 +31,7 @@ def main(arg1, arg2):
     """main.
 
     Args:
-        arg1
-        arg2
+        arg1:
+        arg2:
     """
     pass

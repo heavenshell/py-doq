@@ -2,7 +2,7 @@ def foo1(arg1):
     """foo1.
 
     Args:
-        arg1
+        arg1:
     """
     pass
 
@@ -11,7 +11,7 @@ def foo2(arg1)->List[int]:
     """foo2.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -23,7 +23,7 @@ def foo3(arg1) ->List[int]:
     """foo3.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -35,7 +35,7 @@ def foo4(arg1)-> List[int]:
     """foo4.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -47,7 +47,7 @@ def foo5(arg1) -> List[int]:
     """foo5.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -59,7 +59,7 @@ def foo6(arg1) -> List[int] :
     """foo6.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -73,7 +73,7 @@ def foo7(
     """foo7.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -87,7 +87,7 @@ def foo8(
     """foo8.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -101,7 +101,7 @@ def foo9(
     """foo9.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -115,7 +115,7 @@ def foo10(
     """foo10.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:
@@ -129,7 +129,7 @@ def foo11(
     """foo11.
 
     Args:
-        arg1
+        arg1:
 
     Returns:
         List[int]:

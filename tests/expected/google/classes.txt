@@ -6,7 +6,7 @@ class Foo:
         """foo.
 
         Args:
-            arg1
+            arg1:
         """
         pass
 
@@ -14,7 +14,7 @@ class Foo:
         """bar.
 
         Args:
-            arg1
+            arg1:
         """
         pass
 
@@ -61,7 +61,7 @@ class Bar:
         """bar.
 
         Args:
-            arg1
+            arg1:
         """
         pass
 
@@ -69,7 +69,7 @@ class Bar:
         """baz.
 
         Args:
-            arg1
+            arg1:
         """
         pass
 
