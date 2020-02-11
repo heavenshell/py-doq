@@ -7,10 +7,10 @@ def get_adjacency(
     """get_adjacency.
 
     Args:
-        facets
-        points
-        max_degree
-        dtypes
+        facets:
+        points:
+        max_degree:
+        dtypes:
     """
     pass
 
@@ -24,10 +24,10 @@ def get_adjacency2(
     """get_adjacency2.
 
     Args:
-        facets
-        points
-        max_degree
-        dtypes
+        facets:
+        points:
+        max_degree:
+        dtypes:
 
     Returns:
         List[int]:

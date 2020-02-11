@@ -2,13 +2,13 @@ def foo(arg1):
     """foo.
 
     Args:
-        arg1
+        arg1:
     """
     def bar(arg2):
         """bar.
 
         Args:
-            arg2
+            arg2:
         """
         pass
 
@@ -17,13 +17,13 @@ def bar(arg1=None):
     """bar.
 
     Args:
-        arg1
+        arg1:
     """
     def baz(arg2=None):
         """baz.
 
         Args:
-            arg2
+            arg2:
         """
         pass
 
