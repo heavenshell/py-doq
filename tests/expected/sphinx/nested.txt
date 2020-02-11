@@ -1,0 +1,18 @@
+class Foo:
+    """Foo."""
+
+    def foo(self):
+        """foo."""
+        class Bar:
+            """Bar."""
+
+            def bar(self):
+                """bar."""
+                pass
+
+            def baz(self, arg1):
+                """baz.
+
+                :param arg1:
+                """
+                pass
