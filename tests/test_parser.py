@@ -715,6 +715,67 @@ class ParseTestCase(TestCase):
             actual,
         )
 
+    def test_async_keyword(self):
+        line = '\n'.join([
+            'async def foo(arg1):',
+            '   pass',
+        ])
+        actual = parse(line)[0]
+        self.assertDictEqual(
+            {
+                'name': 'foo',
+                'params': [{
+                    'argument': 'arg1',
+                    'annotation': None,
+                    'default': None,
+                }],
+                'return_type': None,
+                'start_lineno': 1,
+                'start_col': 0,
+                'end_lineno': 2,
+                'end_col': 7,
+                'is_doc_exists': False,
+            },
+            actual,
+        )
+
+    def test_async_keyword_with_class(self):
+        line = '\n'.join([
+            'class Foo:',
+            '   async def foo(arg1):',
+            '      pass',
+        ])
+        actual = parse(line)[0]
+        self.assertDictEqual(
+            {
+                'name': 'Foo',
+                'defs': [
+                    {
+                        'name': 'foo',
+                        'params': [
+                            {
+                                'argument': 'arg1',
+                                'annotation': None,
+                                'default': None,
+                            },
+                        ],
+                        'return_type': None,
+                        'start_lineno': 2,
+                        'start_col': 3,
+                        'end_lineno': 3,
+                        'end_col': 10,
+                        'is_doc_exists': False,
+                    },
+                ],
+                'start_lineno': 1,
+                'start_col': 0,
+                'end_lineno': 3,
+                'end_col': 10,
+                'is_doc_exists': False,
+            },
+            actual,
+        )
+
 
 class ReturnTypeTestCase(TestCase):
     @parameterized.expand([

@@ -21,6 +21,22 @@ def get_return_type(line):
     return None
 
 
+def get_start_col(line, start_col):
+    lines = line.split('\n')
+    for v in lines:
+        if v == '':
+            # Maybe line break only row
+            continue
+
+        index = v.find('def')
+        if index == start_col:
+            return start_col
+
+    # Maybe async keyword exists.
+    # parso does not parse by parso and it's known issue.
+    return start_col - 6    # 'async '
+
+
 def parse_return_type(code, start_lineno, end_lineno):
     lines = code.strip().split('\n')
     lineno = end_lineno - start_lineno
@@ -46,6 +62,9 @@ def parse_defs(module, ignores=None):   # noqa C901
 
         (start_lineno, start_col) = d.start_pos
         (end_lineno, end_col) = d.end_pos
+
+        code = d.get_code()
+        start_col = get_start_col(code, start_col)
 
         name = d.name.value
         params = []
@@ -75,7 +94,7 @@ def parse_defs(module, ignores=None):   # noqa C901
         next_node = d.get_suite().get_first_leaf().get_next_sibling()
         stmt_start_lineno = next_node.start_pos[0] if next_node else 2
         return_type = parse_return_type(
-            code=d.get_code(),
+            code=code,
             start_lineno=start_lineno,
             end_lineno=stmt_start_lineno - 1,
         )
