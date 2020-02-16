@@ -80,9 +80,9 @@ def generate_def_docstrings(signature, template):
     return docstrings
 
 
-def generate_docstrings(lines, path):
+def generate_docstrings(code, path, omissions=None):
     template = Template(paths=[path])
-    signatures = parse('\n'.join(lines))
+    signatures = parse('\n'.join(code), omissions=omissions)
 
     docstrings = []
     for signature in signatures:
@@ -160,8 +160,14 @@ def run(args):
     if not os.path.exists(path):
         return False
 
+    omissions = args.omit.split(',') if args.omit else None
+
     for target in targets:
-        docstrings = generate_docstrings(target['lines'], path)
+        docstrings = generate_docstrings(
+            code=target['lines'],
+            path=path,
+            omissions=omissions,
+        )
         if len(docstrings) == 0:
             continue
 
@@ -236,6 +242,12 @@ def parse_options():
         type=int,
         default=4,
         help='Indent number',
+    )
+    parser.add_argument(
+        '--omit',
+        type=str,
+        default=None,
+        help='Omit first argument such as self',
     )
     parser.add_argument(
         '-r',
