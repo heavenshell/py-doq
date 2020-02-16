@@ -52,9 +52,9 @@ def parse_return_type(code, start_lineno, end_lineno):
     return None
 
 
-def parse_defs(module, ignores=None):   # noqa C901
-    if ignores is None:
-        ignores = []
+def parse_defs(module, omissions=None):   # noqa C901
+    if omissions is None:
+        omissions = []
 
     results = []
     for d in module.iter_funcdefs():
@@ -77,7 +77,7 @@ def parse_defs(module, ignores=None):   # noqa C901
                 # Ignore first argument if method is `@classmethod`.
                 continue
 
-            if p.name.value in ignores and i == 0:
+            if p.name.value in omissions and i == 0:
                 # Method's first variable is maybe `self`.
                 continue
 
@@ -131,7 +131,7 @@ def parse_classdefs(module):
         (end_lineno, end_col) = c.end_pos
 
         name = c.name.value
-        defs = parse_defs(c, ignores=['self'])
+        defs = parse_defs(c, omissions=['self'])
         results.append({
             'name': name,
             'defs': defs,
@@ -151,12 +151,12 @@ def parse_classdefs(module):
     return results
 
 
-def parse(line, ignores=None):
-    m = parso.parse(line)
+def parse(code, omissions=None):
+    m = parso.parse(code)
     results = []
-    if 'class' in line:
+    if 'class' in code:
         results = parse_classdefs(m)
 
-    results += parse_defs(m, ignores=ignores)
+    results += parse_defs(m, omissions=omissions)
 
     return results

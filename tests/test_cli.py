@@ -51,6 +51,7 @@ class CliTestCase(TestCase):
                     indent=4,
                     recursive=False,
                     write=False,
+                    omit=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -73,6 +74,7 @@ class CliTestCase(TestCase):
                     indent=4,
                     recursive=False,
                     write=False,
+                    omit=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -94,6 +96,7 @@ class CliTestCase(TestCase):
                     indent=4,
                     recursive=False,
                     write=False,
+                    omit=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -116,6 +119,7 @@ class CliTestCase(TestCase):
                     indent=4,
                     recursive=False,
                     write=False,
+                    omit=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -137,6 +141,7 @@ class CliTestCase(TestCase):
                     indent=4,
                     recursive=False,
                     write=False,
+                    omit=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -159,6 +164,7 @@ class CliTestCase(TestCase):
                     indent=4,
                     recursive=False,
                     write=False,
+                    omit=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -218,6 +224,7 @@ class CliTestCase(TestCase):
                 indent=4,
                 recursive=False,
                 write=False,
+                omit=None,
             )
             targets = get_targets(args)
             self.assertEqual(1, len(targets))
@@ -372,3 +379,93 @@ class CliTestCase(TestCase):
         self.assertEqual(0, results[0]['end_col'])
         self.assertEqual(1, results[0]['start_lineno'])
         self.assertEqual(5, results[0]['end_lineno'])
+
+    def test_omit_one(self):
+        docstrings = [
+            'def foo(self, arg1):',
+            '   """foo.',
+            '',
+            '   :param arg1',
+            '   pass',
+        ]
+
+        template_path = os.path.join(
+            self.basepath,
+            'doq',
+            'templates',
+            'sphinx',
+        )
+        results = generate_docstrings(
+            docstrings,
+            template_path,
+            omissions=['self'],
+        )
+        expected_docstrings = [
+            [
+                '"""foo.',
+                '',
+                ':param arg1:',
+                '"""',
+            ],
+        ]
+        self.assertEqual(
+            '\n'.join(expected_docstrings[0]),
+            results[0]['docstring'],
+        )
+        self.assertEqual(0, results[0]['start_col'])
+        self.assertEqual(0, results[0]['end_col'])
+        self.assertEqual(1, results[0]['start_lineno'])
+        self.assertEqual(5, results[0]['end_lineno'])
+
+    def test_omit_two(self):
+        docstrings = [
+            'def foo(self, arg1):',
+            '   pass',
+            '',
+            '',
+            'def bar(cls, arg1):',
+            '   pass',
+        ]
+
+        template_path = os.path.join(
+            self.basepath,
+            'doq',
+            'templates',
+            'sphinx',
+        )
+        results = generate_docstrings(
+            docstrings,
+            template_path,
+            omissions=['self', 'cls'],
+        )
+
+        expected_docstrings = [
+            [
+                '"""foo.',
+                '',
+                ':param arg1:',
+                '"""',
+            ],
+            [
+                '"""bar.',
+                '',
+                ':param arg1:',
+                '"""',
+            ],
+        ]
+        self.assertEqual(
+            '\n'.join(expected_docstrings[0]),
+            results[0]['docstring'],
+        )
+        self.assertEqual(0, results[0]['start_col'])
+        self.assertEqual(0, results[0]['end_col'])
+        self.assertEqual(1, results[0]['start_lineno'])
+        self.assertEqual(3, results[0]['end_lineno'])
+        self.assertEqual(
+            '\n'.join(expected_docstrings[1]),
+            results[1]['docstring'],
+        )
+        self.assertEqual(0, results[1]['start_col'])
+        self.assertEqual(0, results[1]['end_col'])
+        self.assertEqual(5, results[1]['start_lineno'])
+        self.assertEqual(6, results[1]['end_lineno'])
