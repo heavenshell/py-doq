@@ -1,0 +1,31 @@
+async def foo(arg1, arg2):
+    """foo.
+
+    :param arg1:
+    :param arg2:
+    """
+    pass
+
+
+def bar(arg1):
+    """bar.
+
+    :param arg1:
+    """
+    async def baz(arg2):
+        """baz.
+
+        :param arg2:
+        """
+        pass
+
+
+class Foo:
+    """Foo."""
+
+    async def ham(self, arg1):
+        """ham.
+
+        :param arg1:
+        """
+        pass

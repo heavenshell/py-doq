@@ -20,6 +20,7 @@ class CliTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.files = [
+            'async.txt',
             'class.txt',
             'classes.txt',
             'defs.txt',

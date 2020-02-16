@@ -1,0 +1,12 @@
+async def foo(arg1, arg2):
+    pass
+
+
+def bar(arg1):
+    async def baz(arg2):
+        pass
+
+
+class Foo:
+    async def ham(self, arg1):
+        pass
