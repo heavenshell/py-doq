@@ -59,7 +59,8 @@ def generate_def_docstrings(signature, template):
     for d in signature['defs']:
         if d['is_doc_exists'] is False:
             filename = 'noarg.txt'
-            if 'params' in d and len(d['params']):
+            if ('params' in d and len(d['params'])) \
+                    or ('return_type' in d and d['return_type']):
                 filename = 'def.txt'
             elif 'defs' in d:
                 filename = 'class.txt'
@@ -103,7 +104,7 @@ def generate_docstrings(code, path, omissions=None):
         else:
             if signature['is_doc_exists'] is False:
                 filename = 'def.txt' \
-                    if len(signature['params']) else 'noarg.txt'
+                    if len(signature['params']) or signature['return_type'] else 'noarg.txt'
                 # Function docstring
                 docstring = template.load(params=signature, filename=filename)
                 docstrings.append({
