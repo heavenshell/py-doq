@@ -176,7 +176,7 @@ def run(args):
 
     if not targets:
         return
-    
+
     for target in targets:
         docstrings = generate_docstrings(
             code=target['lines'],
