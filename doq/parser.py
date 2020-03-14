@@ -99,6 +99,10 @@ def parse_defs(module, omissions=None):   # noqa C901
             end_lineno=stmt_start_lineno - 1,
         )
 
+        exceptions = []
+        for e in d.iter_raise_stmts():
+            exceptions.append(e.children[1].get_first_leaf().get_code().strip())
+
         results.append({
             'name': name,
             'params': params,
@@ -108,6 +112,7 @@ def parse_defs(module, omissions=None):   # noqa C901
             'end_lineno': end_lineno,
             'end_col': end_col,
             'is_doc_exists': is_doc_exists,
+            'exceptions': exceptions,
         })
 
         nested = parse_defs(d)
