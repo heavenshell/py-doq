@@ -52,6 +52,7 @@ class CliTestCase(TestCase):
                     recursive=False,
                     write=False,
                     omit=None,
+                    ignore_exception=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -75,6 +76,7 @@ class CliTestCase(TestCase):
                     recursive=False,
                     write=False,
                     omit=None,
+                    ignore_exception=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -97,6 +99,7 @@ class CliTestCase(TestCase):
                     recursive=False,
                     write=False,
                     omit=None,
+                    ignore_exception=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -120,6 +123,7 @@ class CliTestCase(TestCase):
                     recursive=False,
                     write=False,
                     omit=None,
+                    ignore_exception=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -142,6 +146,7 @@ class CliTestCase(TestCase):
                     recursive=False,
                     write=False,
                     omit=None,
+                    ignore_exception=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -165,6 +170,7 @@ class CliTestCase(TestCase):
                     recursive=False,
                     write=False,
                     omit=None,
+                    ignore_exception=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -225,6 +231,7 @@ class CliTestCase(TestCase):
                 recursive=False,
                 write=False,
                 omit=None,
+                ignore_exception=False,
             )
             targets = get_targets(args)
             self.assertEqual(1, len(targets))
@@ -469,3 +476,40 @@ class CliTestCase(TestCase):
         self.assertEqual(0, results[1]['end_col'])
         self.assertEqual(5, results[1]['start_lineno'])
         self.assertEqual(6, results[1]['end_lineno'])
+
+    def test_not_ignore_exception(self):
+        docstrings = [
+            'def foo(arg1):',
+            '   raise Exception()',
+        ]
+
+        template_path = os.path.join(
+            self.basepath,
+            'examples',
+        )
+        results = generate_docstrings(
+            docstrings,
+            template_path,
+            omissions=['self'],
+            ignore_exception=False,
+        )
+        expected_docstrings = [
+            [
+                '"""Summary of foo.',
+                '',
+                'Args:',
+                '    arg1',
+                '',
+                'Raises:',
+                '    Exception:',
+                '"""',
+            ],
+        ]
+        self.assertEqual(
+            '\n'.join(expected_docstrings[0]),
+            results[0]['docstring'],
+        )
+        self.assertEqual(0, results[0]['start_col'])
+        self.assertEqual(0, results[0]['end_col'])
+        self.assertEqual(1, results[0]['start_lineno'])
+        self.assertEqual(2, results[0]['end_lineno'])

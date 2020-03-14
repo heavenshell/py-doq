@@ -1,11 +1,18 @@
 """Summary of {{ name }}.
-
+{% if params %}
 Args:
 {%- for p in params %}
     {{ p.argument }}{% if p.annotation %} ({{ p.annotation }}): Description of {{ p.argument }}.{% endif -%}{% if p.default %} Default to {{ p.default }}{% endif -%}
 {% endfor %}
+{% endif -%}
 {% if return_type %}
 Returns:
     {{ return_type }}: Description of return value
+{% endif -%}
+{% if exceptions %}
+Raises:
+{%- for e in exceptions %}
+    {{ e }}:
+{%- endfor %}
 {% endif -%}
 """
