@@ -174,6 +174,9 @@ def run(args):
 
     omissions = args.omit.split(',') if args.omit else None
 
+    if not targets:
+        return
+
     for target in targets:
         docstrings = generate_docstrings(
             code=target['lines'],
