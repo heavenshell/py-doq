@@ -9,6 +9,6 @@ flake8-import-order==0.18.1
 flake8-print==3.1.4
 flake8-string-format==0.3.0
 jinja2==2.11.1
-pep8-naming==0.9.1
+pep8-naming==0.10.0
 parameterized==0.7.1
 parso==0.6.2
