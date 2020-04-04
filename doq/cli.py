@@ -111,7 +111,6 @@ def generate_docstrings(
     )
     is_exception = False if ignore_exception else is_exception_enabled(os.path.join(path, 'def.txt'))
     is_yield = False if ignore_yield else is_yield_enabled(os.path.join(path, 'def.txt'))
-    print(is_yield)
 
     docstrings = []
     for signature in signatures:
