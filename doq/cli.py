@@ -54,28 +54,31 @@ def get_template_path(template_path, formatter):
     return os.path.abspath(template_path)
 
 
-def generate_def_docstrings(signature, template, is_exception=False):
+def generate_def_docstrings(signature, template, is_exception=False, is_yield=False):
     docstrings = []
     for d in signature['defs']:
         if d['is_doc_exists'] is False:
             filename = 'noarg.txt'
             if ('params' in d and len(d['params'])) \
                     or ('return_type' in d and d['return_type']) \
-                    or (is_exception and 'exceptions' in d and len(d['exceptions']) > 0):
+                    or (is_exception and 'exceptions' in d and len(d['exceptions']) > 0) \
+                    or (is_yield and 'yields' in d and len(d['yields']) > 0):
                 filename = 'def.txt'
             elif 'defs' in d:
                 filename = 'class.txt'
 
             docstring = template.load(params=d, filename=filename)
-            docstrings.append({
-                'docstring': docstring,
-                'start_lineno': d['start_lineno'],
-                'start_col': d['start_col'],
-                'end_lineno': d['end_lineno'],
-                'end_col': d['start_col'],
-            })
+            docstrings.append(
+                {
+                    'docstring': docstring,
+                    'start_lineno': d['start_lineno'],
+                    'start_col': d['start_col'],
+                    'end_lineno': d['end_lineno'],
+                    'end_col': d['start_col'],
+                },
+            )
             if 'defs' in d:
-                results = generate_def_docstrings(d, template, is_exception)
+                results = generate_def_docstrings(d, template, is_exception, is_yield)
                 if len(results):
                     docstrings += results
 
@@ -87,10 +90,28 @@ def is_exception_enabled(path):
         return 'exceptions' in f.read()
 
 
-def generate_docstrings(code, path, omissions=None, ignore_exception=False):
+def is_yield_enabled(path):
+    with open(path) as f:
+        return 'yields' in f.read()
+
+
+def generate_docstrings(
+    code,
+    path,
+    omissions=None,
+    ignore_exception=False,
+    ignore_yield=False,
+):
     template = Template(paths=[path])
-    signatures = parse('\n'.join(code), omissions=omissions)
+    signatures = parse(
+        '\n'.join(code),
+        omissions=omissions,
+        ignore_exception=ignore_exception,
+        ignore_yield=ignore_yield,
+    )
     is_exception = False if ignore_exception else is_exception_enabled(os.path.join(path, 'def.txt'))
+    is_yield = False if ignore_yield else is_yield_enabled(os.path.join(path, 'def.txt'))
+    print(is_yield)
 
     docstrings = []
     for signature in signatures:
@@ -98,33 +119,38 @@ def generate_docstrings(code, path, omissions=None, ignore_exception=False):
             # Class docstring
             if signature['is_doc_exists'] is False:
                 docstring = template.load(params=signature, filename='class.txt')
-                docstrings.append({
-                    'docstring': docstring,
-                    'start_lineno': signature['start_lineno'],
-                    'start_col': signature['start_col'],
-                    'end_lineno': signature['end_lineno'],
-                    'end_col': signature['end_col'],
-                })
+                docstrings.append(
+                    {
+                        'docstring': docstring,
+                        'start_lineno': signature['start_lineno'],
+                        'start_col': signature['start_col'],
+                        'end_lineno': signature['end_lineno'],
+                        'end_col': signature['end_col'],
+                    },
+                )
 
             # Method docstring
-            docstrings += generate_def_docstrings(signature, template, is_exception)
+            docstrings += generate_def_docstrings(signature, template, is_exception, is_yield)
         else:
             if signature['is_doc_exists'] is False:
                 filename = 'noarg.txt'
                 if len(signature['params']) \
                         or signature['return_type'] \
-                        or is_exception and signature['exceptions']:
+                        or is_exception and signature['exceptions'] \
+                        or is_yield and signature['yields']:
                     filename = 'def.txt'
 
                 # Function docstring
                 docstring = template.load(params=signature, filename=filename)
-                docstrings.append({
-                    'docstring': docstring,
-                    'start_lineno': signature['start_lineno'],
-                    'start_col': signature['start_col'],
-                    'end_lineno': signature['end_lineno'],
-                    'end_col': signature['start_col'],
-                })
+                docstrings.append(
+                    {
+                        'docstring': docstring,
+                        'start_lineno': signature['start_lineno'],
+                        'start_col': signature['start_col'],
+                        'end_lineno': signature['end_lineno'],
+                        'end_col': signature['start_col'],
+                    },
+                )
 
     docstrings.sort(key=_sort)
 
@@ -183,6 +209,7 @@ def run(args):
             path=path,
             omissions=omissions,
             ignore_exception=args.ignore_exception,
+            ignore_yield=args.ignore_yield,
         )
         if len(docstrings) == 0:
             continue
@@ -294,6 +321,11 @@ def parse_options():
         '--ignore_exception',
         action='store_true',
         help='Ignore exception statements',
+    )
+    parser.add_argument(
+        '--ignore_yield',
+        action='store_true',
+        help='Ignore yield statements',
     )
 
     args = parser.parse_args()

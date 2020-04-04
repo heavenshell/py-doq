@@ -9,6 +9,12 @@ Args:
 Returns:
     {{ return_type }}: Description of return value
 {% endif -%}
+{% if yields %}
+Yields:
+{%- for y in yields %}
+    {{ y }}:
+{%- endfor %}
+{% endif -%}
 {% if exceptions %}
 Raises:
 {%- for e in exceptions %}
