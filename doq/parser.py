@@ -143,7 +143,7 @@ def parse_classdefs(module, ignore_exception=False, ignore_yield=False):
         (end_lineno, end_col) = c.end_pos
 
         name = c.name.value
-        defs = parse_defs(c, omissions=['self'], ignore_exception=ignore_exception, ignore_yeild=ignore_yield)
+        defs = parse_defs(c, omissions=['self'], ignore_exception=ignore_exception, ignore_yield=ignore_yield)
         results.append(
             {
                 'name': name,
@@ -169,7 +169,7 @@ def parse(code, omissions=None, ignore_exception=False, ignore_yield=False):
     m = parso.parse(code)
     results = []
     if 'class' in code:
-        results = parse_classdefs(m, ignore_exception=ignore_exception, ignore_yeild=ignore_yield)
+        results = parse_classdefs(m, ignore_exception=ignore_exception, ignore_yield=ignore_yield)
 
     results += parse_defs(
         m,
