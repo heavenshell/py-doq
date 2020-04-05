@@ -34,7 +34,7 @@ def get_start_col(line, start_col):
 
     # Maybe async keyword exists.
     # parso does not parse by parso and it's known issue.
-    return start_col - 6    # 'async '
+    return start_col - 6  # 'async '
 
 
 def parse_return_type(code, start_lineno, end_lineno):
@@ -52,7 +52,7 @@ def parse_return_type(code, start_lineno, end_lineno):
     return None
 
 
-def parse_defs(module, omissions=None):   # noqa C901
+def parse_defs(module, omissions=None, ignore_exception=False, ignore_yield=False):  # noqa C901
     if omissions is None:
         omissions = []
 
@@ -68,9 +68,7 @@ def parse_defs(module, omissions=None):   # noqa C901
 
         name = d.name.value
         params = []
-        is_classmethod = any(
-            '@classmethod' in d.get_code() for d in d.get_decorators()
-        )
+        is_classmethod = any('@classmethod' in d.get_code() for d in d.get_decorators())
 
         for i, p in enumerate(d.get_params()):
             if is_classmethod and i == 0:
@@ -99,23 +97,32 @@ def parse_defs(module, omissions=None):   # noqa C901
             end_lineno=stmt_start_lineno - 1,
         )
 
+        yields = []
+        if ignore_yield is False:
+            for y in d.iter_yield_exprs():
+                yields.append(y.children[1].get_first_leaf().value)
+
         exceptions = []
-        for e in d.iter_raise_stmts():
-            exceptions.append(e.children[1].get_first_leaf().get_code().strip())
+        if ignore_exception is False:
+            for e in d.iter_raise_stmts():
+                exceptions.append(e.children[1].get_first_leaf().get_code().strip())
 
-        results.append({
-            'name': name,
-            'params': params,
-            'return_type': return_type,
-            'start_lineno': start_lineno,
-            'start_col': start_col,
-            'end_lineno': end_lineno,
-            'end_col': end_col,
-            'is_doc_exists': is_doc_exists,
-            'exceptions': exceptions,
-        })
+        results.append(
+            {
+                'name': name,
+                'params': params,
+                'return_type': return_type,
+                'start_lineno': start_lineno,
+                'start_col': start_col,
+                'end_lineno': end_lineno,
+                'end_col': end_col,
+                'is_doc_exists': is_doc_exists,
+                'exceptions': exceptions,
+                'yields': yields,
+            },
+        )
 
-        nested = parse_defs(d)
+        nested = parse_defs(d, ignore_exception=ignore_exception, ignore_yield=ignore_yield)
         if len(nested):
             results += nested
 
@@ -126,7 +133,7 @@ def parse_defs(module, omissions=None):   # noqa C901
     return results
 
 
-def parse_classdefs(module):
+def parse_classdefs(module, ignore_exception=False, ignore_yield=False):
     results = []
 
     for c in module.iter_classdefs():
@@ -136,18 +143,20 @@ def parse_classdefs(module):
         (end_lineno, end_col) = c.end_pos
 
         name = c.name.value
-        defs = parse_defs(c, omissions=['self'])
-        results.append({
-            'name': name,
-            'defs': defs,
-            'start_lineno': start_lineno,
-            'start_col': start_col,
-            'end_lineno': end_lineno,
-            'end_col': end_col,
-            'is_doc_exists': is_doc_exists,
-        })
+        defs = parse_defs(c, omissions=['self'], ignore_exception=ignore_exception, ignore_yield=ignore_yield)
+        results.append(
+            {
+                'name': name,
+                'defs': defs,
+                'start_lineno': start_lineno,
+                'start_col': start_col,
+                'end_lineno': end_lineno,
+                'end_col': end_col,
+                'is_doc_exists': is_doc_exists,
+            },
+        )
 
-        nested = parse_classdefs(c)
+        nested = parse_classdefs(c, ignore_exception=ignore_exception, ignore_yield=ignore_yield)
         if len(nested):
             results += nested
 
@@ -156,12 +165,17 @@ def parse_classdefs(module):
     return results
 
 
-def parse(code, omissions=None):
+def parse(code, omissions=None, ignore_exception=False, ignore_yield=False):
     m = parso.parse(code)
     results = []
     if 'class' in code:
-        results = parse_classdefs(m)
+        results = parse_classdefs(m, ignore_exception=ignore_exception, ignore_yield=ignore_yield)
 
-    results += parse_defs(m, omissions=omissions)
+    results += parse_defs(
+        m,
+        omissions=omissions,
+        ignore_exception=ignore_exception,
+        ignore_yield=ignore_yield,
+    )
 
     return results

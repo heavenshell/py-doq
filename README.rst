@@ -87,8 +87,8 @@ Usage
 
   $ python -m doq.cli --help
   usage: doq [-h] [-f FILE] [--start START] [--end END] [-t TEMPLATE_PATH]
-             [-s STYLE] [--formatter FORMATTER] [--indent INDENT] [-r]
-             [-d DIRECTORY] [-w] [-v]
+           [-s STYLE] [--formatter FORMATTER] [--indent INDENT] [--omit OMIT]
+           [-r] [-d DIRECTORY] [-w] [-v] [--ignore_exception] [--ignore_yield]
 
   Docstring generator.
 
@@ -104,11 +104,14 @@ Usage
     --formatter FORMATTER
                           Docstring formatter. sphinx,google or numpy
     --indent INDENT       Indent number
+    --omit OMIT           Omit first argument such as self
     -r, --recursive       Run recursively over directories
     -d DIRECTORY, --directory DIRECTORY
                           Dire
     -w, --write           Edit files in-place
     -v, --version         Output the version number
+    --ignore_exception    Ignore exception statements
+    --ignore_yield        Ignore yield statements
 
 Customize template
 ==================
@@ -144,6 +147,8 @@ Available Jinja2's variable
 |             | default    | Defaut keyword argument   |
 +-------------+------------+---------------------------+
 | exceptions               | List of exception         |
++--------------------------+---------------------------+
+| yields                   | List of yield             |
 +--------------------------+---------------------------+
 | return_type              | Return type hint          |
 +--------------------------+---------------------------+
