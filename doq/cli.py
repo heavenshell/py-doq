@@ -33,7 +33,7 @@ def find_files(basedir):
 def get_lines(file, start, end):
     lines = []
     with contextlib.closing(file) as f:
-        lines = [l.strip('\n') for l in f]
+        lines = [line.strip('\n') for line in f]
         start = start - 1
         end = len(lines) if end == 0 else end
 

@@ -195,7 +195,7 @@ class CliTestCase(TestCase):
     def test_get_lines(self):
         path = os.path.join(self.fixtures_path, 'defs.txt')
         with open(path) as f:
-            expected = [l.rstrip() for l in f.readlines()]
+            expected = [line.rstrip() for line in f.readlines()]
 
         with open(path) as f:
             actual = get_lines(f, 1, 0)
