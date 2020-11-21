@@ -88,14 +88,9 @@ def parse_defs(module, omissions=None, ignore_exception=False, ignore_yield=Fals
 
             params.append(arguments)
 
-        # parso does not have return type. So parse from signature.
-        next_node = d.get_suite().get_first_leaf().get_next_sibling()
-        stmt_start_lineno = next_node.start_pos[0] if next_node else 2
-        return_type = parse_return_type(
-            code=code,
-            start_lineno=start_lineno,
-            end_lineno=stmt_start_lineno - 1,
-        )
+        return_type = None
+        if d.children[3].value == '->':
+            return_type = d.children[4].get_code().strip()
 
         yields = []
         if ignore_yield is False:
