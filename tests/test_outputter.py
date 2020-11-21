@@ -107,6 +107,40 @@ class StringOutptterTestCase(TestCase):
         ])
         self.assertEqual(expected, output)
 
+    def test_multi_return_type(self):
+        lines = [
+            'def foo(arg1) -> List[',
+            '    int,',
+            '    int,',
+            ']:',
+            '    pass',
+        ]
+        docstrings = [{
+            'docstring': '"""foo.\n\n:param arg1:\n:rtype List[\n    int,\n    int,\n]:\n"""',
+            'start_lineno': 1,
+            'start_col': 0,
+            'end_lineno': 7,
+            'end_col': 0,
+            'is_doc_exists': False,
+        }]
+        output = StringOutptter().format(lines=lines, docstrings=docstrings, indent=4)
+        expected = '\n'.join([
+            'def foo(arg1) -> List[',
+            '    int,',
+            '    int,',
+            ']:',
+            '    """foo.',
+            '',
+            '    :param arg1:',
+            '    :rtype List[',
+            '        int,',
+            '        int,',
+            '    ]:',
+            '    """',
+            '    pass',
+        ])
+        self.assertEqual(expected, output)
+
 
 class JSONOutptterTestCase(TestCase):
     def test_same_lines(self):

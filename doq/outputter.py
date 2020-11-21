@@ -14,13 +14,20 @@ class StringOutptter(BaseOutputter):
             return start
         else:
             for i, line in enumerate(lines[start:end]):
-                # Found end of signature without type
                 if line.endswith('):'):
+                    # Found end of signature without type
                     return start + i + 1
                 elif re.search(r'\):', line):
                     return start + i + 1
-                # Found end of signature with type
+                elif re.search(r'\]:', line):
+                    # Found end of signature type
+                    #   def foo(a, b) -> Tuple[
+                    #       int,
+                    #   ]:
+                    #       pass
+                    return start + i + 1
                 elif re.search(r'->(.*):', line):
+                    # Found end of signature with type
                     return start + i + 1
 
         return start

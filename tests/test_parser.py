@@ -484,6 +484,37 @@ class ParseTestCase(TestCase):
             actual,
         )
 
+    def test_with_return_multi_line_type(self):
+        line = '\n'.join([
+            'def foo(arg1) -> Tuple[',
+            '    int,',
+            '    int,',
+            ']:',
+            '    pass',
+        ])
+        actual = parse(line)[0]
+        self.assertDictEqual(
+            {
+                'name': 'foo',
+                'params': [
+                    {
+                        'argument': 'arg1',
+                        'annotation': None,
+                        'default': None,
+                    },
+                ],
+                'return_type': 'Tuple[\n    int,\n    int,\n]',
+                'start_lineno': 1,
+                'start_col': 0,
+                'end_lineno': 5,
+                'end_col': 8,
+                'is_doc_exists': False,
+                'exceptions': [],
+                'yields': [],
+            },
+            actual,
+        )
+
     def test_with_defs(self):
         line = '\n'.join([
             'def bar(arg1) -> List[str]:',
