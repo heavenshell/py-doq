@@ -226,10 +226,10 @@ def run(args):
 
         if args.write and target['path'] != '<stdin>':
             with open(target['path'], 'w') as f:
-                f.write(output)
+                f.write(output + '\n')
 
         else:
-            sys.stdout.write(output)
+            sys.stdout.write(output + '\n')
 
     return True
 

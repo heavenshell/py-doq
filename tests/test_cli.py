@@ -59,7 +59,7 @@ class CliTestCase(TestCase):
                     run(args)
             actual = p.getvalue().split('\n')
             with open(os.path.join(expected_path, file)) as f:
-                expected = f.read().rstrip().split('\n')
+                expected = f.read().split('\n')
 
             self.assertSequenceEqual(expected, actual)
 
@@ -108,7 +108,7 @@ class CliTestCase(TestCase):
                     run(args)
             actual = p.getvalue().split('\n')
             with open(os.path.join(expected_path, file)) as f:
-                expected = f.read().rstrip().split('\n')
+                expected = f.read().split('\n')
 
             self.assertSequenceEqual(expected, actual)
 
@@ -157,7 +157,7 @@ class CliTestCase(TestCase):
                     run(args)
             actual = p.getvalue().split('\n')
             with open(os.path.join(expected_path, file)) as f:
-                expected = f.read().rstrip().split('\n')
+                expected = f.read().split('\n')
 
             self.assertSequenceEqual(expected, actual)
 
