@@ -11,4 +11,4 @@ flake8-string-format==0.3.0
 jinja2==2.11.3
 pep8-naming==0.11.1
 parameterized==0.8.1
-parso==0.8.1
+parso==0.8.2
