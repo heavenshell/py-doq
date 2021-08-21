@@ -71,6 +71,77 @@ class StringOutptterTestCase(TestCase):
         ])
         self.assertEqual(expected, output)
 
+    def test_multi_lines_with_space(self):
+        lines = [
+            'def foo(',
+            '    arg1,',
+            '    arg2,',
+            '    arg3,',
+            ') :',
+            '    pass',
+        ]
+
+        docstrings = [{
+            'docstring': '"""foo.\n\n:param arg1:\n:param arg2:\n:param arg3:\n"""',
+            'start_lineno': 1,
+            'start_col': 0,
+            'end_lineno': 8,
+            'end_col': 0,
+            'is_doc_exists': False,
+        }]
+        output = StringOutptter().format(lines=lines, docstrings=docstrings, indent=4)
+        expected = '\n'.join([
+            'def foo(',
+            '    arg1,',
+            '    arg2,',
+            '    arg3,',
+            ') :',
+            '    """foo.',
+            '',
+            '    :param arg1:',
+            '    :param arg2:',
+            '    :param arg3:',
+            '    """',
+            '    pass',
+        ])
+        self.assertEqual(expected, output)
+
+    def test_multi_lines_with_space_and_return_type(self):
+        lines = [
+            'def foo(',
+            '    arg1,',
+            '    arg2,',
+            '    arg3,',
+            ') -> int :',
+            '    pass',
+        ]
+
+        docstrings = [{
+            'docstring': '"""foo.\n\n:param arg1:\n:param arg2:\n:param arg3:\n:rtype: int\n"""',
+            'start_lineno': 1,
+            'start_col': 0,
+            'end_lineno': 8,
+            'end_col': 0,
+            'is_doc_exists': False,
+        }]
+        output = StringOutptter().format(lines=lines, docstrings=docstrings, indent=4)
+        expected = '\n'.join([
+            'def foo(',
+            '    arg1,',
+            '    arg2,',
+            '    arg3,',
+            ') -> int :',
+            '    """foo.',
+            '',
+            '    :param arg1:',
+            '    :param arg2:',
+            '    :param arg3:',
+            '    :rtype: int',
+            '    """',
+            '    pass',
+        ])
+        self.assertEqual(expected, output)
+
     def test_multi_lines_with_return_type(self):
         lines = [
             'def foo(',
