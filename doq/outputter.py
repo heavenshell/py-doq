@@ -17,9 +17,9 @@ class StringOutptter(BaseOutputter):
                 if line.endswith('):'):
                     # Found end of signature without type
                     return start + i + 1
-                elif re.search(r'\):', line):
+                elif re.search(r'\):|\)\s*:', line):
                     return start + i + 1
-                elif re.search(r'\]:', line):
+                elif re.search(r'\]:|\]\s*:', line):
                     # Found end of signature type
                     #   def foo(a, b) -> Tuple[
                     #       int,
