@@ -89,6 +89,7 @@ Usage
   usage: doq [-h] [-f FILE] [--start START] [--end END] [-t TEMPLATE_PATH]
            [-s STYLE] [--formatter FORMATTER] [--indent INDENT] [--omit OMIT]
            [-r] [-d DIRECTORY] [-w] [-v] [--ignore_exception] [--ignore_yield]
+           [--ignore_init]
 
   Docstring generator.
 
@@ -112,6 +113,7 @@ Usage
     -v, --version         Output the version number
     --ignore_exception    Ignore exception statements
     --ignore_yield        Ignore yield statements
+    --ignore_init         Ignore genereate docstring to __init__ method
 
 Customize template
 ==================
@@ -157,4 +159,5 @@ See `examples <https://github.com/heavenshell/py-doq/tree/master/examples>`_
 
 LICENSE
 =======
+
 NEW BSD LICENSE.

@@ -52,7 +52,7 @@ def parse_return_type(code, start_lineno, end_lineno):
     return None
 
 
-def parse_defs(module, omissions=None, ignore_exception=False, ignore_yield=False):  # noqa C901
+def parse_defs(module, omissions=None, ignore_exception=False, ignore_yield=False, ignore_init=False):  # noqa C901
     if omissions is None:
         omissions = []
 
@@ -117,7 +117,12 @@ def parse_defs(module, omissions=None, ignore_exception=False, ignore_yield=Fals
             },
         )
 
-        nested = parse_defs(d, ignore_exception=ignore_exception, ignore_yield=ignore_yield)
+        nested = parse_defs(
+            d,
+            ignore_exception=ignore_exception,
+            ignore_yield=ignore_yield,
+            ignore_init=ignore_init,
+        )
         if len(nested):
             results += nested
 
@@ -128,7 +133,7 @@ def parse_defs(module, omissions=None, ignore_exception=False, ignore_yield=Fals
     return results
 
 
-def parse_classdefs(module, ignore_exception=False, ignore_yield=False):
+def parse_classdefs(module, ignore_exception=False, ignore_yield=False, ignore_init=False):
     results = []
 
     for c in module.iter_classdefs():
@@ -138,7 +143,13 @@ def parse_classdefs(module, ignore_exception=False, ignore_yield=False):
         (end_lineno, end_col) = c.end_pos
 
         name = c.name.value
-        defs = parse_defs(c, omissions=['self'], ignore_exception=ignore_exception, ignore_yield=ignore_yield)
+        defs = parse_defs(
+            c,
+            omissions=['self'],
+            ignore_exception=ignore_exception,
+            ignore_yield=ignore_yield,
+            ignore_init=ignore_init,
+        )
         results.append(
             {
                 'name': name,
@@ -160,17 +171,23 @@ def parse_classdefs(module, ignore_exception=False, ignore_yield=False):
     return results
 
 
-def parse(code, omissions=None, ignore_exception=False, ignore_yield=False):
+def parse(code, omissions=None, ignore_exception=False, ignore_yield=False, ignore_init=False):
     m = parso.parse(code)
     results = []
     if 'class' in code:
-        results = parse_classdefs(m, ignore_exception=ignore_exception, ignore_yield=ignore_yield)
+        results = parse_classdefs(
+            m,
+            ignore_exception=ignore_exception,
+            ignore_yield=ignore_yield,
+            ignore_init=ignore_init,
+        )
 
     results += parse_defs(
         m,
         omissions=omissions,
         ignore_exception=ignore_exception,
         ignore_yield=ignore_yield,
+        ignore_init=ignore_init,
     )
 
     return results
