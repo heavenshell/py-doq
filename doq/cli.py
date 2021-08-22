@@ -54,7 +54,7 @@ def get_template_path(template_path, formatter):
     return os.path.abspath(template_path)
 
 
-def generate_def_docstrings(signature, template, is_exception=False, is_yield=False):
+def generate_def_docstrings(signature, template, is_exception=False, is_yield=False, ignore_init=False):
     docstrings = []
     for d in signature['defs']:
         if d['is_doc_exists'] is False:
@@ -67,18 +67,24 @@ def generate_def_docstrings(signature, template, is_exception=False, is_yield=Fa
             elif 'defs' in d:
                 filename = 'class.txt'
 
-            docstring = template.load(params=d, filename=filename)
-            docstrings.append(
-                {
-                    'docstring': docstring,
-                    'start_lineno': d['start_lineno'],
-                    'start_col': d['start_col'],
-                    'end_lineno': d['end_lineno'],
-                    'end_col': d['start_col'],
-                },
-            )
+            if ignore_init and d['name'] == '__init__':
+                # numpy style guide says constructor's docstring should
+                # documented at class docstring.
+                # https://numpydoc.readthedocs.io/en/latest/format.html#class-docstring
+                pass
+            else:
+                docstring = template.load(params=d, filename=filename)
+                docstrings.append(
+                    {
+                        'docstring': docstring,
+                        'start_lineno': d['start_lineno'],
+                        'start_col': d['start_col'],
+                        'end_lineno': d['end_lineno'],
+                        'end_col': d['start_col'],
+                    },
+                )
             if 'defs' in d:
-                results = generate_def_docstrings(d, template, is_exception, is_yield)
+                results = generate_def_docstrings(d, template, is_exception, is_yield, ignore_init=ignore_init)
                 if len(results):
                     docstrings += results
 
@@ -101,6 +107,7 @@ def generate_docstrings(
     omissions=None,
     ignore_exception=False,
     ignore_yield=False,
+    ignore_init=False,
 ):
     template = Template(paths=[path])
     signatures = parse(
@@ -108,6 +115,7 @@ def generate_docstrings(
         omissions=omissions,
         ignore_exception=ignore_exception,
         ignore_yield=ignore_yield,
+        ignore_init=ignore_init,
     )
     is_exception = False if ignore_exception else is_exception_enabled(os.path.join(path, 'def.txt'))
     is_yield = False if ignore_yield else is_yield_enabled(os.path.join(path, 'def.txt'))
@@ -129,7 +137,7 @@ def generate_docstrings(
                 )
 
             # Method docstring
-            docstrings += generate_def_docstrings(signature, template, is_exception, is_yield)
+            docstrings += generate_def_docstrings(signature, template, is_exception, is_yield, ignore_init)
         else:
             if signature['is_doc_exists'] is False:
                 filename = 'noarg.txt'
@@ -209,6 +217,7 @@ def run(args):
             omissions=omissions,
             ignore_exception=args.ignore_exception,
             ignore_yield=args.ignore_yield,
+            ignore_init=args.ignore_init,
         )
         if len(docstrings) == 0:
             continue
@@ -325,6 +334,11 @@ def parse_options():
         '--ignore_yield',
         action='store_true',
         help='Ignore yield statements',
+    )
+    parser.add_argument(
+        '--ignore_init',
+        action='store_true',
+        help='Ignore genereate docstring to __init__ method',
     )
 
     args = parser.parse_args()

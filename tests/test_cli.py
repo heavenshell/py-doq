@@ -54,6 +54,7 @@ class CliTestCase(TestCase):
                     omit=None,
                     ignore_exception=False,
                     ignore_yield=False,
+                    ignore_init=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -79,6 +80,7 @@ class CliTestCase(TestCase):
                     omit=None,
                     ignore_exception=False,
                     ignore_yield=False,
+                    ignore_init=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -103,6 +105,7 @@ class CliTestCase(TestCase):
                     omit=None,
                     ignore_exception=False,
                     ignore_yield=False,
+                    ignore_init=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -128,6 +131,7 @@ class CliTestCase(TestCase):
                     omit=None,
                     ignore_exception=False,
                     ignore_yield=False,
+                    ignore_init=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -152,6 +156,7 @@ class CliTestCase(TestCase):
                     omit=None,
                     ignore_exception=False,
                     ignore_yield=False,
+                    ignore_init=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -177,6 +182,7 @@ class CliTestCase(TestCase):
                     omit=None,
                     ignore_exception=False,
                     ignore_yield=False,
+                    ignore_init=False,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -559,3 +565,73 @@ class CliTestCase(TestCase):
         self.assertEqual(0, results[0]['end_col'])
         self.assertEqual(1, results[0]['start_lineno'])
         self.assertEqual(3, results[0]['end_lineno'])
+
+    def test_ignore_init(self):
+        docstrings = [
+            'class Foo:',
+            '   def __init__(self, arg1):',
+            '       pass',
+            '',
+            '',
+            'class Bar:',
+            '   def bar(self, arg1, arg2):',
+            '      pass',
+        ]
+
+        template_path = os.path.join(
+            self.basepath,
+            'doq',
+            'templates',
+            'sphinx',
+        )
+        results = generate_docstrings(
+            docstrings,
+            template_path,
+            omissions=['self'],
+            ignore_exception=False,
+            ignore_yield=False,
+            ignore_init=True,
+        )
+        expected_docstrings = [
+            [
+                '"""Foo."""',
+                '',
+            ],
+            [
+                '"""Bar."""',
+                '',
+            ],
+            [
+                '"""bar.',
+                '',
+                ':param arg1:',
+                ':param arg2:',
+                '"""',
+            ],
+        ]
+        self.assertEqual(
+            '\n'.join(expected_docstrings[0]),
+            results[0]['docstring'],
+        )
+        self.assertEqual(0, results[0]['start_col'])
+        self.assertEqual(0, results[0]['end_col'])
+        self.assertEqual(1, results[0]['start_lineno'])
+        self.assertEqual(4, results[0]['end_lineno'])
+
+        self.assertEqual(
+            '\n'.join(expected_docstrings[1]),
+            results[1]['docstring'],
+        )
+        self.assertEqual(0, results[1]['start_col'])
+        self.assertEqual(10, results[1]['end_col'])
+        self.assertEqual(6, results[1]['start_lineno'])
+        self.assertEqual(8, results[1]['end_lineno'])
+
+        self.assertEqual(
+            '\n'.join(expected_docstrings[2]),
+            results[2]['docstring'],
+        )
+        self.assertEqual(3, results[2]['start_col'])
+        self.assertEqual(3, results[2]['end_col'])
+        self.assertEqual(7, results[2]['start_lineno'])
+        self.assertEqual(8, results[2]['end_lineno'])
