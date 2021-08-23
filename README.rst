@@ -113,7 +113,7 @@ Usage
     -v, --version         Output the version number
     --ignore_exception    Ignore exception statements
     --ignore_yield        Ignore yield statements
-    --ignore_init         Ignore genereate docstring to __init__ method
+    --ignore_init         Ignore generate docstring to __init__ method
 
 Customize template
 ==================

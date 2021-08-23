@@ -338,7 +338,7 @@ def parse_options():
     parser.add_argument(
         '--ignore_init',
         action='store_true',
-        help='Ignore genereate docstring to __init__ method',
+        help='Ignore generate docstring to __init__ method',
     )
 
     args = parser.parse_args()
