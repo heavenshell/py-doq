@@ -85,35 +85,37 @@ Usage
 
 .. code::
 
-  $ python -m doq.cli --help
-  usage: doq [-h] [-f FILE] [--start START] [--end END] [-t TEMPLATE_PATH]
-           [-s STYLE] [--formatter FORMATTER] [--indent INDENT] [--omit OMIT]
-           [-r] [-d DIRECTORY] [-w] [-v] [--ignore_exception] [--ignore_yield]
-           [--ignore_init]
+    $ python -m doq.cli --help
+    usage: doq [-h] [-f FILE] [--start START] [--end END] [-t TEMPLATE_PATH]
+               [-s STYLE] [--formatter FORMATTER] [--indent INDENT] [--omit OMIT]
+               [-r] [-d DIRECTORY] [-w] [-v] [-c CONFIG] [--ignore_exception]
+               [--ignore_yield] [--ignore_init]
 
-  Docstring generator.
+    Docstring generator.
 
-  optional arguments:
-    -h, --help            show this help message and exit
-    -f FILE, --file FILE  File or STDIN
-    --start START         Start lineno
-    --end END             End lineno
-    -t TEMPLATE_PATH, --template_path TEMPLATE_PATH
-                          Path to template directory
-    -s STYLE, --style STYLE
-                          Output style string or json
-    --formatter FORMATTER
-                          Docstring formatter. sphinx,google or numpy
-    --indent INDENT       Indent number
-    --omit OMIT           Omit first argument such as self
-    -r, --recursive       Run recursively over directories
-    -d DIRECTORY, --directory DIRECTORY
-                          Dire
-    -w, --write           Edit files in-place
-    -v, --version         Output the version number
-    --ignore_exception    Ignore exception statements
-    --ignore_yield        Ignore yield statements
-    --ignore_init         Ignore generate docstring to __init__ method
+    optional arguments:
+      -h, --help            show this help message and exit
+      -f FILE, --file FILE  File or STDIN
+      --start START         Start lineno
+      --end END             End lineno
+      -t TEMPLATE_PATH, --template_path TEMPLATE_PATH
+                            Path to template directory
+      -s STYLE, --style STYLE
+                            Output style string or json
+      --formatter FORMATTER
+                            Docstring formatter. sphinx,google or numpy
+      --indent INDENT       Indent number
+      --omit OMIT           Omit first argument such as self
+      -r, --recursive       Run recursively over directories
+      -d DIRECTORY, --directory DIRECTORY
+                            Path to directory
+      -w, --write           Edit files in-place
+      -v, --version         Output the version number
+      -c CONFIG, --config CONFIG
+                            Path to a setup.cfg or pyproject.toml
+      --ignore_exception    Ignore exception statements
+      --ignore_yield        Ignore yield statements
+      --ignore_init         Ignore generate docstring to __init__ method
 
 Customize template
 ==================
@@ -156,6 +158,39 @@ Available Jinja2's variable
 +--------------------------+---------------------------+
 
 See `examples <https://github.com/heavenshell/py-doq/tree/master/examples>`_
+
+Configuration
+=============
+
+doq will automatically search ``setup.cfg`` or ``pyproject.toml`` in your
+project.
+
+.. note::
+
+    ignore_exception, ignore_exception and ignore_init can set `true` only.
+    If you want turn off, remove from configuration.
+
+setup.cfg
+~~~~~~~~~
+
+The section must be ``[doq]``.
+
+configuration file example::
+
+  [doq]
+  style = "json"
+  template_path = "/path/to/template"
+
+pyproject.toml
+~~~~~~~~~~~~~~
+
+The section must be ``[tool.doq]``.
+
+configuration file example::
+
+  [tool.doq]
+  style = "json"
+  template_path = "/path/to/template"
 
 LICENSE
 =======
