@@ -1,0 +1,3 @@
+[tool.doq]
+ignore_init = true
+style = "json"

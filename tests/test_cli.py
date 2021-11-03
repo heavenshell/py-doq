@@ -55,6 +55,7 @@ class CliTestCase(TestCase):
                     ignore_exception=False,
                     ignore_yield=False,
                     ignore_init=False,
+                    config=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -81,6 +82,7 @@ class CliTestCase(TestCase):
                     ignore_exception=False,
                     ignore_yield=False,
                     ignore_init=False,
+                    config=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -106,6 +108,7 @@ class CliTestCase(TestCase):
                     ignore_exception=False,
                     ignore_yield=False,
                     ignore_init=False,
+                    config=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -132,6 +135,7 @@ class CliTestCase(TestCase):
                     ignore_exception=False,
                     ignore_yield=False,
                     ignore_init=False,
+                    config=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -157,6 +161,7 @@ class CliTestCase(TestCase):
                     ignore_exception=False,
                     ignore_yield=False,
                     ignore_init=False,
+                    config=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -183,6 +188,7 @@ class CliTestCase(TestCase):
                     ignore_exception=False,
                     ignore_yield=False,
                     ignore_init=False,
+                    config=None,
                 )
                 with patch('doq.cli.sys.stdout', new_callable=StringIO) as p:
                     run(args)
@@ -245,6 +251,7 @@ class CliTestCase(TestCase):
                 omit=None,
                 ignore_exception=False,
                 ignore_yield=False,
+                config=None,
             )
             targets = get_targets(args)
             self.assertEqual(1, len(targets))

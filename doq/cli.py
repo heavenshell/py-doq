@@ -5,6 +5,7 @@ import re
 import sys
 
 from doq import __version__
+from doq.config import find_config
 from doq.outputter import (
     JSONOutputter,
     StringOutptter,
@@ -310,7 +311,7 @@ def parse_options():
         '-d',
         '--directory',
         default='',
-        help='Dire',
+        help='Path to directory',
     )
     parser.add_argument(
         '-w',
@@ -324,6 +325,12 @@ def parse_options():
         action='version',
         version='%(prog)s {0}'.format(__version__),
         help='Output the version number',
+    )
+    parser.add_argument(
+        '-c',
+        '--config',
+        default=None,
+        help='Path to a setup.cfg or pyproject.toml',
     )
     parser.add_argument(
         '--ignore_exception',
@@ -342,6 +349,10 @@ def parse_options():
     )
 
     args = parser.parse_args()
+    configs = find_config(args)
+    if configs:
+        parser.set_defaults(**configs)
+        args = parser.parse_args()
 
     return args
 

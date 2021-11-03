@@ -34,7 +34,7 @@ setup(
         'templates/numpy/*.txt',
         'templates/sphinx/*.txt',
     ]},
-    install_requires=['parso', 'jinja2'],
+    install_requires=['parso', 'jinja2', 'toml'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
