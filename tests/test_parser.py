@@ -864,6 +864,31 @@ class ParseTestCase(TestCase):
             },
             actual,
         )
+    def test_bare_raise(self):
+        line = '\n'.join([
+            'def foo():',
+            '   try:',
+            '      12/0',
+            '   except:',
+            '      raise',
+        ])
+
+        actual = parse(line)[0]
+        self.assertDictEqual(
+            {
+                'name': 'foo',
+                'params': [],
+                'return_type': None,
+                'start_lineno': 1,
+                'start_col': 0,
+                'end_lineno': 5,
+                'end_col': 11,
+                'is_doc_exists': False,
+                'exceptions': [''],
+                'yields': [],
+            },
+            actual,
+        )
 
 
 class ReturnTypeTestCase(TestCase):
