@@ -864,6 +864,7 @@ class ParseTestCase(TestCase):
             },
             actual,
         )
+
     def test_bare_raise(self):
         line = '\n'.join([
             'def foo():',
