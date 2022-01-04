@@ -100,7 +100,10 @@ def parse_defs(module, omissions=None, ignore_exception=False, ignore_yield=Fals
         exceptions = []
         if ignore_exception is False:
             for e in d.iter_raise_stmts():
-                exceptions.append(e.children[1].get_first_leaf().get_code().strip())
+                if hasattr(e, 'children'):
+                    exceptions.append(e.children[1].get_first_leaf().get_code().strip())
+                else:  # bare raise
+                    exceptions.append('')
 
         results.append(
             {
