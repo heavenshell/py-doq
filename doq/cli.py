@@ -250,13 +250,18 @@ def parse_options():
         description='Docstring generator.',
         add_help=True,
     )
+    try:
+        import shtab
+    except ImportError:
+        from . import _shtab as shtab
+    shtab.add_argument_to(parser)
     parser.add_argument(
         '-f',
         '--file',
         type=argparse.FileType('r'),
         default='-',
         help='File or STDIN',
-    )
+    ).complete = shtab.FILE
     parser.add_argument(
         '--start',
         type=int,
@@ -275,7 +280,7 @@ def parse_options():
         type=str,
         default=None,
         help='Path to template directory',
-    )
+    ).complete = shtab.DIR
     parser.add_argument(
         '-s',
         '--style',
@@ -312,7 +317,7 @@ def parse_options():
         '--directory',
         default='',
         help='Path to directory',
-    )
+    ).complete = shtab.DIR
     parser.add_argument(
         '-w',
         '--write',
@@ -331,7 +336,7 @@ def parse_options():
         '--config',
         default=None,
         help='Path to a setup.cfg or pyproject.toml',
-    )
+    ).complete = shtab.FILE
     parser.add_argument(
         '--ignore_exception',
         action='store_true',

@@ -192,6 +192,12 @@ configuration file example::
   style = "json"
   template_path = "/path/to/template"
 
+Completion
+==========
+
+This program provides shell completions. It should be out of box if you install
+it from a wheel file.
+
 LICENSE
 =======
 
