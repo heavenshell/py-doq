@@ -5,7 +5,7 @@ FILE = DIR = {}
 
 class PrintCompletionAction(Action):
     def __call__(self, parser, namespace, values, option_string=None):
-        print('Please install shtab firstly!')  # noqa: T001 print found
+        print('Please install shtab firstly!')  # noqa: T201 print found
         parser.exit(0)
 
 
