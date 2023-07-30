@@ -47,3 +47,7 @@ include = ["doq"]
 
 [tool.setuptools_scm]
 write_to = "doq/_version.py"
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]

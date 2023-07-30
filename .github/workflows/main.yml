@@ -32,7 +32,7 @@ jobs:
 
     - name: Test
       run: |
-        python setup.py test
+        pytest
 
     - name: Flake8
       run: |
