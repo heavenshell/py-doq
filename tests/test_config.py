@@ -22,8 +22,10 @@ class ConfigSetupCfgTestCase(TestCase):
     def test_find_setupcfg(self):
         rootpath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         expected = os.path.join(rootpath, 'setup.cfg')
+        paths = []
         for path in find_config_path():
-            self.assertEqual(expected, path)
+            paths.append(path)
+        self.assertIn(expected, paths)
 
     def test_read_setupcfg(self):
         setupcfg = os.path.join(self.fixtures_path, 'setup.cfg')
@@ -87,6 +89,12 @@ class ConfigSetupCfgTestCase(TestCase):
         )
 
     def test_find_config_not_found(self):
+        pyproject_path = os.path.join(self.basepath, 'pyproject.toml')
+        shutil.move(
+            pyproject_path,
+            os.path.join(self.basepath, '_pyproject.toml'),
+        )
+
         args = argparse.Namespace(
             start=1,
             end=0,
@@ -104,6 +112,10 @@ class ConfigSetupCfgTestCase(TestCase):
         )
         configs = find_config(args)
         self.assertDictEqual({}, configs)
+        shutil.move(
+            os.path.join(self.basepath, '_pyproject.toml'),
+            pyproject_path,
+        )
 
 
 class ConfigPyprojectTomlTestCase(TestCase):
@@ -114,17 +126,12 @@ class ConfigPyprojectTomlTestCase(TestCase):
 
     def test_find_pyproject_toml(self):
         rootpath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        fixtures_path = os.path.join(self.fixtures_path, 'pyproject.toml')
-        shutil.copyfile(fixtures_path, os.path.join(rootpath, 'pyproject.toml'))
-
         expected = [
             os.path.join(rootpath, 'setup.cfg'),
             os.path.join(rootpath, 'pyproject.toml'),
         ]
         for path in find_config_path():
             self.assertIn(path, expected)
-
-        os.remove(os.path.join(rootpath, 'pyproject.toml'))
 
     def test_read_pyproject_toml(self):
         pyproject = os.path.join(self.fixtures_path, 'pyproject.toml')
