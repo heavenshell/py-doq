@@ -22,7 +22,7 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 completion = ["shtab"]
-test = ["parameterized"]
+test = ["parameterized", "pytest"]
 
 [[project.authors]]
 name = "Shinya Ohyanagi"
