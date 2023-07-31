@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools_scm", "setuptools-generate == 0.0.6", "parso"]
+requires = ["setuptools-generate == 0.0.6", "parso"]
 build-backend = "setuptools.build_meta"
 
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
@@ -22,7 +22,7 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 completion = ["shtab"]
-test = ["parameterized"]
+test = ["parameterized", "pytest"]
 
 [[project.authors]]
 name = "Shinya Ohyanagi"
@@ -45,8 +45,8 @@ doq = "doq.cli:main"
 [tool.setuptools.packages.find]
 include = ["doq"]
 
-[tool.setuptools_scm]
-write_to = "doq/_version.py"
+[tool.setuptools.dynamic]
+version = {attr = "doq.__version__"}
 
 [tool.pytest.ini_options]
 addopts = "-ra"
