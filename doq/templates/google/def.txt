@@ -1,9 +1,11 @@
 """{{ name }}.
+{% if params -%}
 
 Args:
 {%- for p in params %}
     {{ p.argument }}{% if p.annotation %} ({{ p.annotation }}): {{ p.argument }}{% else %}:{% endif -%}
 {% endfor %}
+{% endif -%}
 {% if return_type %}
 Returns:
     {{ return_type }}:
