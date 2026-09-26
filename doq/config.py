@@ -18,7 +18,7 @@ def read_setup_cfg(filepath):
 def read_pyproject_toml(filepath):
     import toml
 
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8', newline='\n') as f:
         config = toml.load(f)
 
     if config.get('tool', {}).get('doq') is None:
