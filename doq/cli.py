@@ -34,7 +34,7 @@ def find_files(basedir):
 def get_lines(file, start, end):
     lines = []
     with contextlib.closing(file) as f:
-        lines = [line.strip('\n') for line in f]
+        lines = [line.strip('\r\n') for line in f]
         start = start - 1
         end = len(lines) if end == 0 else end
 
@@ -93,12 +93,12 @@ def generate_def_docstrings(signature, template, is_exception=False, is_yield=Fa
 
 
 def is_exception_enabled(path):
-    with open(path) as f:
+    with open(path, encoding='utf-8', newline='') as f:
         return 'exceptions' in f.read()
 
 
 def is_yield_enabled(path):
-    with open(path) as f:
+    with open(path, encoding='utf-8', newline='') as f:
         return 'yields' in f.read()
 
 
@@ -170,7 +170,7 @@ def get_targets(args):
     if args.recursive:
         files = find_files(args.directory)
         for file in files:
-            with open(file) as f:
+            with open(file, encoding='utf-8', newline='') as f:
                 lines = get_lines(f, args.start, args.end)
                 if len(lines) == 0:
                     continue
@@ -235,7 +235,7 @@ def run(args):
         )
 
         if args.write and target['path'] != '<stdin>':
-            with open(target['path'], 'w') as f:
+            with open(target['path'], 'w', encoding='utf-8', newline='') as f:
                 f.write(output + '\n')
 
         else:
@@ -258,7 +258,7 @@ def parse_options():
     parser.add_argument(
         '-f',
         '--file',
-        type=argparse.FileType('r'),
+        type=argparse.FileType('r', encoding='utf-8'),
         default='-',
         help='File or STDIN',
     ).complete = shtab.FILE
